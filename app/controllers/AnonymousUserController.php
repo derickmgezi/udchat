@@ -27,8 +27,8 @@ class AnonymousUserController extends \BaseController {
         
         $anonyChats=Message::where('receiver_id',Auth::user()->id)
                     ->whereNotIn('sender_id',$friend_ids)
-                    ->orderBy('date_sent', 'desc')
                     ->groupBy('sender_id')
+                    ->orderBy('date_sent', 'desc')
                     ->get();
         
         Session::put('anonyChats',$anonyChats);
