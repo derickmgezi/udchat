@@ -1,0 +1,151 @@
+/*Google Fonts*/
+@font-face{
+    font-family: "Antic Slab";
+    src: url(../fonts/AnticSlab-Regular.ttf) format("truetype");
+}
+
+@font-face{
+    font-family: "Marvel";
+    src: url(../fonts/Marvel-Regular.ttf) format("truetype");
+}
+
+@font-face{
+    font-family: "BasicLig";
+    src: url(../fonts/BasicLig_ltd.ttf) format("truetype");
+}
+
+@font-face{
+    font-family: "Jura";
+    src: url(../fonts/Jura-Regular.ttf) format("truetype");
+}
+
+/*CSS code from Bootply.com editor*/
+html,body {
+  height:100%;
+}
+
+h1 {
+  font-family: 'Antic Slab', serif;
+  font-size:80px;
+  color:#DDCCEE;
+}
+
+.my-Antic-Slab-Font {
+  font-family: 'Antic Slab';
+}
+
+.my-Calibri-Font {
+  font-family: 'Calibri';
+}
+
+.my-pull-right{
+    float: right;
+    position: relative;
+    top: 10px;
+}
+
+.lead {
+	color:#DDCCEE;
+}
+
+
+/* Custom container */
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+  min-height:100%;
+  background-color:#110022;
+   /*color:#eee;*/
+  overflow:hidden;
+}
+
+.container-full a {
+  color:#efefef;
+  text-decoration:none;
+}
+
+.v-center {
+  margin-top:7%;
+}
+  
+.my-center{
+    text-align: center;
+}
+.my-move-down{
+    position: relative;
+    bottom: -18em;
+}
+
+.my-Logo{
+    font-family: BasicLig;
+    font-size: 30px;
+}
+
+.my-popups-header{
+    font-family: Calibri;
+}
+
+.my-font-Antic_Slab{
+    font-family: Antic Slab;
+}
+
+.my-debate-panel .panel-body {
+    height: 650px;
+    overflow-y: scroll;
+}
+
+.my-move-change-button{
+    position: relative;
+    top: -37px;
+    right: 3px;
+}
+
+/*div.container {
+	margin: 50px auto;
+	width: 675px;
+}*/
+
+div.image {
+	position: relative;
+	overflow: hidden;
+	width: 254px;
+	height: 145px;
+	display: inline-block;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	
+	box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.3);
+}
+
+span.titleContent {
+	width: 254px;
+	height: 20px;
+	position: absolute;
+	background: rgba(30,30,30,0.9);
+	text-align: center;
+	padding: 5px 0 4px;
+	font-size: 14px;
+	color: white;
+	font-family: "Lucida Sans", "Trebuchet MS", Arial, sans-serif;
+	
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+	
+}
+
+div.image.revealUpFull span { 
+	height: 145px;
+	width: 254px;
+	bottom: -120px;
+}
+
+div.image.revealUpFull:hover img {
+	top: -150px;
+}
+
+div.image.revealUpFull:hover span {
+	bottom: 0px;
+}
