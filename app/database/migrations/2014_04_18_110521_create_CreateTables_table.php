@@ -18,6 +18,7 @@ class CreateCreateTablesTable extends Migration {
                 $attrib->timestamp('first_login');
                 $attrib->timestamp('login');
                 $attrib->timestamp('logout')->nullable();
+                $attrib->string('remember_token', 100);
 
                 // created_at, updated_at DATETIME
                 $attrib->timestamps();
