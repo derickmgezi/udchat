@@ -10,8 +10,12 @@ class PageController extends \BaseController {
         return View::make('user.anonymous');
     }
     
-    public function friends(){
+    public function friendsPage(){
         return View::make('user.friends');
+    }
+    
+    public function debatePage(){
+        return View::make('user.debate');
     }
 	/**
 	 * Display a listing of the resource.

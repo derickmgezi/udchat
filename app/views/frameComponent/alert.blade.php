@@ -54,7 +54,7 @@
         <li>
             <a class="text-center" href="#">
                 <strong>See All Alerts</strong>
-                <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                <span class="glyphicon glyphicon-chevron-right"></span>
             </a>
         </li>
     </ul>

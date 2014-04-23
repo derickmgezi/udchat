@@ -21,12 +21,12 @@
                                                     <div class="header">
                                                         <strong class="primary-font">&nbsp;&nbsp;&nbsp;<i class="fa fa-male"></i> {{User::find($friend_request->request_id)->nick_name}}</strong><br>
                                                         &nbsp;&nbsp;
-                                                        <a href="{{URL::to("user/accept_friend_request/".$friend_request->request_id)}}" style="text-decoration: none;">
+                                                        <a href="{{URL::to("user/acceptFriendRequest/".$friend_request->request_id)}}" style="text-decoration: none;">
                                                             <button class="btn btn-success">
                                                                 Accept
                                                             </button>
                                                         </a>
-                                                        <a href="{{URL::to("user/denie_friend_request/".$friend_request->request_id)}}" style="text-decoration: none;">
+                                                        <a href="{{URL::to("user/denieFriendRequest/".$friend_request->request_id)}}" style="text-decoration: none;">
                                                             <button class="btn btn-danger">
                                                                 Deny
                                                             </button><br>&nbsp;&nbsp; 

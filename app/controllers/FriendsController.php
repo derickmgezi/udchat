@@ -42,7 +42,7 @@ class FriendsController extends \BaseController {
 
         Session::put('friend_requests',$friend_requests);
         
-        return Redirect::route('friends');
+        return Redirect::route('friendsPage');
     }
     
     public function friendChat($id){
@@ -64,7 +64,7 @@ class FriendsController extends \BaseController {
         
         Session::put('messageInfor',$messageInfor);
         //dd(Session::get('messageInfor'));
-        return Redirect::route('friends')
+        return Redirect::route('friendsPage')
                         ->with('global',$id);
     }
     
@@ -86,13 +86,13 @@ class FriendsController extends \BaseController {
             
             Session::put('messageInfor',$messageInfor);
             
-            return Redirect::route('friends')
+            return Redirect::route('friendsPage')
                         ->with('global',$id);
             
         }
     }
     
-    public function accept_friend_request($id){
+    public function acceptFriendRequest($id){
         $friend_request=Friend::where('request_id',$id)
                         ->where('accept_id',Auth::user()->id)
                         ->first();
@@ -103,7 +103,7 @@ class FriendsController extends \BaseController {
         return $this->friendList();
     }
     
-    public function denie_friend_request($id){
+    public function denieFriendRequest($id){
         $friend_request=Friend::where('request_id',$id)
                         ->where('accept_id',Auth::user()->id)
                         ->first();

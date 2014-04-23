@@ -18,7 +18,7 @@
 <!--SIGNIN Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content panel panel-default">
+        <div class="modal-content panel panel-default custom-panel">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title my-popups-header" id="myModalLabel">Make sure That You Fill in All The Fields</h3>
@@ -40,22 +40,30 @@
                 {{ Form::open(array('route' =>'login','class'=>'form col-md-12 center-block')) }}
                     <div class="form-group">
                         <div class="input-group" style="text-align:center;margin:0 auto;">
-                            <input type="text" name="f_name" class="form-control input-lg" placeholder="Enter Your First _name" {{(Input::old('f_name'))? 'value="'.e(Input::old('f_name')).'"':''}}>
+                            <input type="text" name="f_name" class="form-control input-lg" placeholder="Enter Your First Name" {{(Input::old('f_name'))? 'value="'.e(Input::old('f_name')).'"':''}}>
                             <span class="input-group-btn">
-                                {{($errors->has('f_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Enter Your First _name</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @if(Input::old('f_name'))
+                                    <button type="button" class="btn btn-lg btn-success"><i class="fa fa-check"></i></button>
+                                @else
+                                    {{($errors->has('f_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Required</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @endif
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group" style="text-align:center;margin:0 auto;">
-                            <input type="text" name="s_name" class="form-control input-lg" placeholder="Enter Your Sir _name" {{(Input::old('s_name'))? 'value="'.e(Input::old('s_name')).'"':''}}>
+                            <input type="text" name="s_name" class="form-control input-lg" placeholder="Enter Your Sir Name" {{(Input::old('s_name'))? 'value="'.e(Input::old('s_name')).'"':''}}>
                             <span class="input-group-btn">
-                                {{($errors->has('s_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Enter Your Sir _name</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @if(Input::old('s_name'))
+                                    <button type="button" class="btn btn-lg btn-success"><i class="fa fa-check"></i></button>
+                                @else
+                                {{($errors->has('s_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Required</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @endif
                             </span>
                         </div>
                     </div>
                     <div class="input-group" style="text-align:center;margin:0 auto;">
-                        <input type="password" name="n_name" class="form-control input-lg" placeholder="Enter Your Nick _name" title="Dont worry, we will not share your information with anyone." {{(Input::old('n_name'))? 'value="'.e(Input::old('n_name')).'"':''}}>
+                        <input type="password" name="n_name" class="form-control input-lg" placeholder="Enter Your Nick Name" title="Dont worry, we will not share your information with anyone." {{(Input::old('n_name'))? 'value="'.e(Input::old('n_name')).'"':''}}>
                         <span class="input-group-btn">
                             <input type="submit" value="LOGIN" class="btn btn-lg btn-danger">
                         </span>
@@ -72,7 +80,7 @@
 
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content panel panel-default">
+        <div class="modal-content panel panel-default custom-panel">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h3 class="modal-title my-popups-header" id="myModalLabel">Make sure That You Fill in All The Fields</h3>
@@ -87,17 +95,25 @@
                 {{ Form::open(array('route' =>'signup','class'=>'form col-md-12 center-block')) }}
                     <div class="form-group">
                         <div class="input-group" style="text-align:center;margin:0 auto;">
-                            <input type="text" name="first_name" class="form-control input-lg" placeholder="Enter Your First _name" {{(Input::old('first_name'))? 'value="'.e(Input::old('first_name')).'"':''}}>
+                            <input type="text" name="first_name" class="form-control input-lg" placeholder="Enter Your First Name" {{(Input::old('first_name'))? 'value="'.e(Input::old('first_name')).'"':''}}>
                             <span class="input-group-btn">
-                                {{($errors->has('first_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Enter Your First _name</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @if(Input::old('first_name'))
+                                    <button type="button" class="btn btn-lg btn-success"><i class="fa fa-check"></i></button>
+                                @else
+                                    {{($errors->has('first_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Required</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @endif
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group" style="text-align:center;margin:0 auto;">
-                            <input type="text" name="sir_name" class="form-control input-lg" placeholder="Enter Your Sir _name" {{(Input::old('sir_name'))? 'value="'.e(Input::old('sir_name')).'"':''}}>
+                            <input type="text" name="sir_name" class="form-control input-lg" placeholder="Enter Your Sir Name" {{(Input::old('sir_name'))? 'value="'.e(Input::old('sir_name')).'"':''}}>
                             <span class="input-group-btn">
-                                {{($errors->has('sir_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Enter Your Sir _name</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @if(Input::old('sir_name'))
+                                    <button type="button" class="btn btn-lg btn-success"><i class="fa fa-check"></i></button>
+                                @else
+                                    {{($errors->has('sir_name'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Required</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @endif
                             </span>
                         </div>
                     </div>
@@ -110,12 +126,16 @@
                                 <option value="female" {{(Input::old('gender'))=='female'? 'selected=""':''}}>Female</option>
                             </select>
                             <span class="input-group-btn">
-                                {{($errors->has('gender'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Select Your Gender</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @if(Input::old('gender'))
+                                    <button type="button" class="btn btn-lg btn-success"><i class="fa fa-check"></i></button>
+                                @else
+                                    {{($errors->has('gender'))? '<button type="button" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-user"></i> Required</button>':'<button type="button" class="btn btn-lg btn-info"><i class="glyphicon glyphicon-user"></i></button>'}}
+                                @endif
                             </span>
                         </div>
                     </div>
                     <div class="input-group" style="text-align:center;margin:0 auto;">
-                        <input type="text" name="nick_name" class="form-control input-lg" placeholder="Enter Your Nick _name" title="Dont worry, we will not share your information with anyone.">
+                        <input type="text" name="nick_name" class="form-control input-lg" placeholder="Enter Your Nick Name" title="Dont worry, we will not share your information with anyone.">
                         <span class="input-group-btn">
                             <input type="submit" value="SIGNUP" class="btn btn-lg btn-success">
                         </span>

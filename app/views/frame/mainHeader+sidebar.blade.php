@@ -47,7 +47,15 @@
                     @include('frameComponent.message')
                     @include('frameComponent.alert')
                     @include('frameComponent.user')
-                    <li><a href="#"><strong><em>20 Users Online</em></strong></a></li>
+                    <li>
+                        <a href="#">
+                            <strong>
+                                <em>
+                                    {{count(User::where('status',1)->whereNotIn('id',array(Auth::user()->id))->get())}} Users Online
+                                </em>
+                            </strong>
+                        </a>
+                    </li>
                 </ul><!-- /.navbar-top-links -->
             </nav><!-- /.navbar-static-top -->
 
@@ -59,7 +67,7 @@
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
-                                        <span class="glyphicon glyphicon-search">
+                                        <span class="glyphicon glyphicon-search"></span>
                                     </button>
                                 </span>
                             </div><!-- /input-group -->

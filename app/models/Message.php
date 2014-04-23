@@ -4,7 +4,6 @@ class Message extends Eloquent{
     protected $table = 'messages';
     
     protected $fillable= array(
-        'id',
         'sender_id',
         'receiver_id',
         'message_content',

@@ -1,6 +1,7 @@
 <?php
 class DebateController extends BaseController {
-public function debate(){
-    return View::make('user.debate');
+    public function debate(){
+    
+        return Redirect::route('debatePage');
     }
 }

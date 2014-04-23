@@ -74,28 +74,33 @@ Route::group(array('before'=>'auth'),function(){
     ));
     
     Route::get('user/friends',array(
-        'as'=>'friends',
-        'uses'=>'PageController@friends'
+        'as'=>'friendsPage',
+        'uses'=>'PageController@friendsPage'
     ));
     
-    Route::get('user/accept_friend_request/{id}',array(
-        'as'=>'accept_friend_request',
-        'uses'=>'FriendsController@accept_friend_request'
+    Route::get('user/acceptFriendRequest/{id}',array(
+        'as'=>'acceptFriendRequest',
+        'uses'=>'FriendsController@acceptFriendRequest'
     ));
     
-    Route::get('user/denie_friend_request/{id}',array(
-        'as'=>'denie_friend_request',
-        'uses'=>'FriendsController@denie_friend_request'
+    Route::get('user/denieFriendRequest/{id}',array(
+        'as'=>'denieFriendRequest',
+        'uses'=>'FriendsController@denieFriendRequest'
+    ));
+    
+    Route::get('user/debate', array(
+        'as'=>'debatePage',
+        'uses'=>'PageController@debatePage'
+    ));
+    
+    Route::get('user/openDebate',array(
+        'as'=>'debate',
+        'uses'=>'DebateController@debate'
     ));
        
     Route::get('user/news',array(
         'as'=>'news',
         'uses'=>'NewsController@news'
-    ));
-    
-    Route::get('user/debate',array(
-        'as'=>'debate',
-        'uses'=>'DebateController@debate'
     ));
 
     Route::get('user/forum/education',array(

@@ -12,6 +12,7 @@
         {{HTML::style("css/bootstrap.min.css")}}
         {{HTML::style("css/font-awesome.css")}}
         {{HTML::style("css/my-home.css")}}
+        {{HTML::style("css/custom.css")}}
 
         <!-- SB Admin CSS - Include with every page -->
         {{HTML::style("css/sb-admin.css")}}
@@ -43,9 +44,17 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-top-links navbar-right">
-                        @include('frameComponent.message')
-                        @include('frameComponent.alert')
-                        <li><a href="#"><strong><em>20 Users Online</em></strong></a></li>
+                        @if(Auth::check())
+                            @include('frameComponent.message')
+                            @include('frameComponent.alert')
+                        @endif
+                        <li>
+                            <a href="#">
+                                <strong>
+                                    <em>{{count(User::where('status',1)->get())}} Users Online</em>
+                                </strong>
+                            </a>
+                        </li>
                     </ul>
                     <!-- /.navbar-top-links -->
                 </div>
