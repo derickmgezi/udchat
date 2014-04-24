@@ -4,12 +4,12 @@
     <div class="col-lg-12">
         <h2 class="page-header">
             <i class="glyphicon glyphicon-fire"></i> Debate
-            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#suggestModal">
+            <a class="btn btn-success btn-lg" data-toggle="modal" data-target="#suggestModal">
                 <strong>Suggest</strong>
-            </button>
-            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#suggestionsModal">
+            </a>
+            <a class="btn btn-warning btn-lg" data-toggle="modal" data-target="#suggestionsModal">
                 <strong><i class="fa fa-eye"></i> Suggestions</strong>
-            </button>
+            </a>
         </h2>
     </div>
     <!-- /.col-lg-12 -->
