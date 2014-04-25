@@ -93,9 +93,29 @@ Route::group(array('before'=>'auth'),function(){
         'uses'=>'PageController@debatePage'
     ));
     
+    Route::post('user/suggetDebate', array(
+        'as'=>'suggetDebate',
+        'uses'=>'DebateController@suggetDebate'
+    ));
+    
     Route::get('user/openDebate',array(
         'as'=>'debate',
         'uses'=>'DebateController@debate'
+    ));
+    
+    Route::get('user/viewDebateSuggestions',array(
+        'as'=>'viewDebateSuggestions',
+        'uses'=>'DebateController@viewDebateSuggestions'
+    ));
+    
+    Route::get('user/editSuggestedDebate/{id}',array(
+        'as'=>'editSuggestedDebate',
+        'uses'=>'DebateController@editSuggestedDebate'
+    ));
+    
+    Route::get('user/deleteSuggestedDebate/{id}',array(
+        'as'=>'deleteSuggestedDebate',
+        'uses'=>'DebateController@deleteSuggestedDebate'
     ));
        
     Route::get('user/news',array(

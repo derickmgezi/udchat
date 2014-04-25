@@ -21,7 +21,22 @@
             </script>
             <?php Session::forget('messageInfor'); ?>
     @endif
+    
+    @if(Session::get('global') == 'debate_suggestions')
+        <script>
+                $('#suggestionsModal').fadeIn(100,function(){
+                    $('#suggestionsModal').modal('show');
+                });
+            </script>
+    @endif
 
+    @if(Session::get('global') == 'edit_suggestion')
+        <script>
+                $('#suggestModal').fadeIn(100,function(){
+                    $('#suggestModal').modal('show');
+                });
+            </script>
+    @endif
 
     </body>
 

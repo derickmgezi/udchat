@@ -28,7 +28,7 @@
                 <a href="#">
                     <span class="avatar">{{HTML::image('image/50x50.gif','',array('class'=>'responsive','height'=>'50','width'=>'50'))}}</span>
                     <span class="name">{{User::find($unreadMessage->sender_id)->nick_name}}:</span>
-                    <span class="message">{{Str::limit($unreadMessage->message_content,65,'...')}}</span>{{(strlen($unreadMessage->message_content) < 30)? '<br>':''}}
+                    <span class="message">{{Str::limit($unreadMessage->message_content,60,'...')}}</span>{{(strlen($unreadMessage->message_content) < 30)? '<br>':''}}
                     <span class="time"><i class="fa fa-clock-o"></i> {{Date::convertTime($unreadMessage->date_sent)}}</span>
                 </a>
             </li>
