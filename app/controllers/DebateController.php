@@ -18,7 +18,7 @@ class DebateController extends \BaseController {
         return Redirect::route('debatePage');
     }
     
-    public function suggetDebate() {
+    public function suggestDebate() {
         $edit_suggestion=DebateSuggestion::where('suggested_by_id',Auth::user()->id)
                                             ->where(
                                                     DB::raw("WEEK(suggestion_time,1)"),
@@ -38,7 +38,8 @@ class DebateController extends \BaseController {
             $new_suggestion->save(); 
         }
         
-        return $this->debate();
+        return $this->debate()
+                    ->with('global','success_message');
     }
     
     public function viewDebateSuggestions() {
@@ -52,8 +53,8 @@ class DebateController extends \BaseController {
         
         Session::put('suggestions',$suggestions);
         
-        return Redirect::route('debatePage')
-                        ->with('global','debate_suggestions');
+        return $this->debate()
+                    ->with('global','debate_suggestions');
     }
     
     public function editSuggestedDebate($id) {
@@ -65,6 +66,27 @@ class DebateController extends \BaseController {
     
     public function deleteSuggestedDebate($id) {
         DebateSuggestion::where('id',$id)->delete();
+        
+        return $this->viewDebateSuggestions();
+    }
+    
+    public function voteSuggestedDebate($id) {
+        $new_vote= new DebateSuggestionVote;
+        
+        $new_vote->suggestion_id = $id;
+        $new_vote->voted_by_id = Auth::user()->id;
+        $new_vote->vote_time = date("Y-m-d H:i:s");
+        
+        $new_vote->save();
+        
+        return $this->viewDebateSuggestions();
+    }
+    
+    public function unvoteSuggestedDebate($id) {
+        $remove_vote=DebateSuggestionVote::where('suggestion_id',$id)
+                                            ->where('voted_by_id',Auth::user()->id)
+                                            ->first();
+        $remove_vote->delete();
         
         return $this->viewDebateSuggestions();
     }

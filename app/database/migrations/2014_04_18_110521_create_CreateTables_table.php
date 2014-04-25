@@ -219,7 +219,7 @@ class CreateCreateTablesTable extends Migration {
                             ->onUpdate('cascade');
                     
                     //unique keys
-                    $attrib->unique('suggestion_id','voted_by_id');
+                    $attrib->unique(array('suggestion_id','voted_by_id'));
                 });
                 
                 Schema::create('debate_suggestion_comments',function($attrib){

@@ -37,6 +37,17 @@
                 });
             </script>
     @endif
+    
+    @if(Session::get('global') == 'success_message')
+        <script>
+                $('#successMessageModal').fadeIn(100,function(){
+                    $('#successMessageModal').modal('show');
+                });
+                
+               
+                 
+            </script>
+    @endif
 
     </body>
 
