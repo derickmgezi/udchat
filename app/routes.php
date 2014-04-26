@@ -4,12 +4,12 @@ Route::group(array('before'=>'guest'),function(){
     //CSRF-Cross Site Request Forgery protection
     Route::group(array('before'=>'csrf'),function(){
         //Create account (POST)
-        Route::post('home',array(
+        Route::post('signup',array(
             'as'=>'signup',
             'uses'=>'AccountController@signup'
         ));
         //login to account (POST)
-        Route::post('/',array(
+        Route::post('login',array(
             'as'=>'login',
             'uses'=>'AccountController@login'
         ));
