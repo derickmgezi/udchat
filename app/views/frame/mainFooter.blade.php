@@ -6,6 +6,7 @@
     {{HTML::script("js/jquery-1.10.2.min.js")}}
     {{HTML::script("js/bootstrap.min.js")}}
     {{HTML::script("js/jquery.metisMenu.js")}}
+    {{HTML::script("js/jquery.udchat.js")}}
 
     <!-- SB Admin Scripts - Include with every page -->
     {{HTML::script("js/sb-admin.js")}}
@@ -48,6 +49,8 @@
                  
             </script>
     @endif
+
+
 
     </body>
 

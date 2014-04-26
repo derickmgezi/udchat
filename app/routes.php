@@ -9,7 +9,7 @@ Route::group(array('before'=>'guest'),function(){
             'uses'=>'AccountController@signup'
         ));
         //login to account (POST)
-        Route::post('/',array(
+        Route::post('login',array(
             'as'=>'login',
             'uses'=>'AccountController@login'
         ));
@@ -46,6 +46,11 @@ Route::group(array('before'=>'auth'),function(){
     Route::get('user/anonymous',array(
         'as'=>'anonymous',
         'uses'=>'PageController@anonymous'
+    ));
+
+    Route::get('user/anonymousChatNewChat',array(
+        'as'=>'anonymousChatNewChat',
+        'uses'=>'AnonymousUserController@anonymousChatNewChat'
     ));
     
     Route::get('user/anonymousChat/{id}',array(
