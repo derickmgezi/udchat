@@ -249,7 +249,7 @@
 
 .chat-panel .panel-body {
     height: 350px;
-    overflow-y: scroll;
+    overflow: auto;
 }
 
 /* Login Page */

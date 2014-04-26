@@ -54,9 +54,12 @@ class AnonymousUserController extends \BaseController {
                                 ->orderBy('date_sent', 'desc')
                                 ->get();
         
-        Session::put('messageInfor',$messageInfor);
-        return Redirect::route('anonymous')
-                        ->with('global',$id);
+        //Session::put('messageInfor',$messageInfor);
+        return View::make('loader.chatloader', compact('messageInfor'));
+    }
+
+    public function anonymousChatNewChat(){
+        return View::make('loader.newmessage');
     }
     
     public function anonymousMessage($id){

@@ -27,11 +27,10 @@
                                             <strong class="primary-font">&nbsp;&nbsp;&nbsp;<i class="fa fa-male"></i> {{Str::limit($anonyUser->nick_name,10,'...')}}</strong><br>
                                             &nbsp;&nbsp;
                                             <!-- ChatBox trigger modal -->
-                                            <a href="{{URL::to("user/anonymousChat/".$anonyUser->id)}}" style="text-decoration: none;">
-                                                <button class="btn btn-success" >
+                                            <button class="btn btn-success" data-toggle="modal" data-target="#chatModal" id="chat" chatterid="{{$anonyUser->id}}" >
                                                     Chat
                                                 </button><br>&nbsp;&nbsp;
-                                            </a> 
+
                                             <small class="text-muted">
                                                 <span class="glyphicon glyphicon-time"></span>{{Date::convertTime($anonyUser->login)}}
                                             </small>
@@ -72,56 +71,29 @@
 ?>
 <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content panel panel-default custom-panel {{($messageCount>5)? 'chat-panel':''}}">
+        <div class="modal-content panel panel-default custom-panel chat-panel {{($messageCount>5)? '':''}}">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">
                     <a href="#" style="text-decoration: none;">
-                        @if(Session::has('global'))
-                        {{User::find(Session::get('global'))->nick_name}}
-                        @endif
+                        <span id="chatter"></span>
                         <sup><i class="fa fa-comments"></i></sup>
                     </a>
                 </h4>
             </div>
             <div class="modal-body panel-body">
-                <ul class="chat">
-                    @if($messageCount>0)
-                        @for($message=0; $message < $messageCount; $message++)
-                            <li class="{{($messagaeInfor[$message]->sender_id == Auth::user()->id)? 'right':'left'}} clearfix">
-                                <a href="#" title="View My Full Profile">
-                                    {{HTML::image('image/download.png','',array('height'=>'50','width'=>'50','class'=>(($messagaeInfor[$message]->sender_id == Auth::user()->id)? 'pull-right':'pull-left').' img-responsive img-circle'))}}
-                                    
-                                </a>
-                                <div class="chat-body clearfix">
-                                    <div class="header">
-                                        <strong class="{{($messagaeInfor[$message]->sender_id == Auth::user()->id)? 'pull-right':''}} primary-font">{{User::find($messagaeInfor[$message]->sender_id)->nick_name}}</strong> 
-                                        <small class="{{($messagaeInfor[$message]->sender_id == Auth::user()->id)? '':'pull-right'}} text-muted">
-                                            <span class="glyphicon glyphicon-time"></span> {{Date::convertTime($messagaeInfor[$message]->date_sent)}}
-                                        </small>
-                                    </div>
-                                    <p>
-                                       <div>
-                                            {{ $messagaeInfor[$message]->message_content }}
-                                        </div> 
-                                    </p>
-                                </div>
-                            </li>
-                        @endfor
-                    @else
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <strong>No previous messages</strong>
-                        </div>
-                    @endif
-                </ul>
+                <center>
+                    <p id="loader" style="display:none"> {{HTML::image("/image/load.gif")}} </p>
+                </center>
+                <div id="udchat-box">
+
+                </div>    
             </div>
-            <div class="panel-footer">
-                {{ Form::open(array('url' => "user/anonymousMessage/".Session::get('global'),'class'=>'form')) }}
+            <div class="panel-footer" style="display:none" id="chat-sms-box" >
                 <div class="input-group">
                     <input id="btn-input" required="" type="text" name="message_content" class="form-control input-sm" placeholder="Type your message here..." />
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-warning btn-sm" id="btn-chat">
+                        <button type="button" class="btn btn-warning btn-sm" id="btn-chat" chatter="">
                             <span class="glyphicon glyphicon-send"></span>
                         </button>
                     </span>

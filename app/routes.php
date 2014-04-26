@@ -47,6 +47,11 @@ Route::group(array('before'=>'auth'),function(){
         'as'=>'anonymous',
         'uses'=>'PageController@anonymous'
     ));
+
+    Route::get('user/anonymousChatNewChat',array(
+        'as'=>'anonymousChatNewChat',
+        'uses'=>'AnonymousUserController@anonymousChatNewChat'
+    ));
     
     Route::get('user/anonymousChat/{id}',array(
         'as'=>'anonymousChat',
