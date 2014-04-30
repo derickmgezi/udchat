@@ -27,7 +27,7 @@
                                             <strong class="primary-font">&nbsp;&nbsp;&nbsp;<i class="fa fa-male"></i> {{Str::limit($anonyUser->nick_name,10,'...')}}</strong><br>
                                             &nbsp;&nbsp;
                                             <!-- ChatBox trigger modal -->
-                                            <button class="btn btn-success" data-toggle="modal" data-target="#chatModal" id="chat" chatterid="{{$anonyUser->id}}" >
+                                            <button class="btn btn-success cht" data-toggle="modal" data-target="#chatModal"  chatterid="{{$anonyUser->id}}" chattername="{{$anonyUser->nick_name}}" >
                                                     Chat
                                                 </button><br>&nbsp;&nbsp;
 
@@ -76,8 +76,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">
                     <a href="#" style="text-decoration: none;">
-                        <span id="chatter"></span>
                         <sup><i class="fa fa-comments"></i></sup>
+                        <span id="chatter_name"></span>
                     </a>
                 </h4>
             </div>

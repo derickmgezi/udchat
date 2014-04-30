@@ -7,13 +7,13 @@
                 </a>
                 <div class="chat-body clearfix">
                     <div class="header">
-                        <strong class="primary-font">Sillent Killer</strong> 
+                        <strong class="primary-font">{{User::find(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
                         <small class="pull-right text-muted">
-                            <span class="glyphicon glyphicon-time"></span> 12 mins ago
+                            <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}
                         </small>
                     </div>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                        {{DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_content}}
                     </p>
                 </div>
             </li>
@@ -24,12 +24,12 @@
             </button>
             <ul class="dropdown-menu slidedown">
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#proposeModal">
+                    <a href="#" data-toggle="modal" data-target="#{{$most_voted_debate->suggestion_id}}proposeModal">
                         <span class="fa fa-thumbs-up"></span> <strong>Propose</strong>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#opposeModal">
+                    <a href="#" data-toggle="modal" data-target="#{{$most_voted_debate->suggestion_id}}opposeModal">
                         <span class="fa fa-thumbs-down"></span> <strong>Oppose</strong>
                     </a>
                 </li>
@@ -47,7 +47,7 @@
 </div><!-- /.panel -->
 
 <!--Propose Modal -->
-<div class="modal fade" id="proposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{$most_voted_debate->suggestion_id}}proposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content custom-panel panel panel-default">
             <div class="modal-header panel-heading"> 
@@ -62,12 +62,14 @@
                         </button>
                         <div class="chat-body clearfix">
                             <div class="header">
-                                <strong class="primary-font">Sillent Killer</strong> 
+                                <strong class="primary-font">{{User::find(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
                                 <small class="pull-right text-muted">
-                                    <span class="glyphicon glyphicon-time"></span> 14 mins ago</small>
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</small>
                             </div>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                <div>
+                                    {{DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_content}}
+                                </div>
                             </p>
                         </div>
                     </li>
@@ -86,7 +88,7 @@
 </div><!-- /.modal -->
 
 <!--Oppose Modal -->
-<div class="modal fade" id="opposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{$most_voted_debate->suggestion_id}}opposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content custom-panel panel panel-default">
             <div class="modal-header panel-heading">
@@ -101,12 +103,14 @@
                         </button>
                         <div class="chat-body clearfix">
                             <div class="header">
-                                <strong class="primary-font">Sillent Killer</strong> 
+                                <strong class="primary-font">{{User::find(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
                                 <small class="pull-right text-muted">
-                                    <span class="glyphicon glyphicon-time"></span> 14 mins ago</small>
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</small>
                             </div>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+                                <div>
+                                    {{DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_content}}
+                                </div>
                             </p>
                         </div>
                     </li>

@@ -9,10 +9,28 @@ class DebateController extends \BaseController {
                                                     date('W',strtotime(date("Y-m-d H:i:s")))
                                                     )
                                             ->first();
+        
         if(count($check_suggestion) == 1){
             Session::put('has_suggested',1);
         }else{
             Session::put('has_suggested',0);
+        }
+        
+        $most_voted_debates=  DebateSuggestionVote::select("suggestion_id",DB::raw("count(voted_by_id) as votes"),DB::raw("week(vote_time,1) as week"))
+                                        ->where(
+                                                DB::raw("WEEK(vote_time,1)"),
+                                                '<=',
+                                                date('W',strtotime(date("Y-m-d H:i:s")))
+                                                )
+                                        ->groupBy('suggestion_id')
+                                        ->orderBy(DB::raw("WEEK(vote_time,1)"),'desc')
+                                        ->orderBy(DB::raw("count(voted_by_id)"),'desc')
+                                        //->groupBy(DB::raw("WEEK(vote_time,1)"))
+                                        ->get();
+        
+        Session::put('most_voted_debates',$most_voted_debates);
+        foreach($most_voted_debates as $most_voted_debate){
+            echo 'Suggestion id:'.$most_voted_debate->suggestion_id.' votes:'.$most_voted_debate->votes.' week:'.$most_voted_debate->week.'<br><br>';
         }
     
         return Redirect::route('debatePage');
@@ -90,6 +108,8 @@ class DebateController extends \BaseController {
         
         return $this->viewDebateSuggestions();
     }
+    
+    
 	/**
 	 * Display a listing of the resource.
 	 *

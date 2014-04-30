@@ -21,30 +21,55 @@
     <!-- /.col-lg-12 -->
     <div class="col-lg-8">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#thisWeek" data-toggle="tab"><strong>This Week</strong></a></li>
-            <li><a href="#lastWeek" data-toggle="tab"><strong>Last Week</strong></a></li>
-            <li class="dropdown">
-                <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"><strong>Last</strong> <i class="fa fa-chevron-down"></i></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-                    <li><a href="#2Weeks" tabindex="-1" data-toggle="tab"><strong>2 Weeks</strong></a></li>
-                    <li><a href="#3Weeks" tabindex="-1" data-toggle="tab"><strong>3 Weeks</strong></a></li>
-                </ul>
-            </li>
+            <?php 
+                $active_week = 1;
+                $active_week_content = 1;
+                $check_week = 0;
+                $drop_down_menu = 0;
+            ?>
+            @foreach(Session::get('most_voted_debates') as $most_voted_debate)
+                <?php
+                        if($most_voted_debate->week == $check_week){
+                            continue;
+                        }else{
+                            $check_week = $most_voted_debate->week;
+                        } 
+                    ?>
+                @if($drop_down_menu != 2)
+                    <li class="{{($active_week)? 'active':''}} <?php $active_week=0;?>">
+                        <a href="#{{$most_voted_debate->suggestion_id}}" data-toggle="tab">
+                            <strong>{{Date::convertTimeToWeeks(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</strong>
+                        </a>
+                    </li><?php $drop_down_menu++; ?>
+                @else
+                    @if($drop_down_menu == 2)<?php $drop_down_menu++;?>
+                        <li class="dropdown">
+                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-chevron-down"></i></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                    @endif
+                                <li><a href="#{{$most_voted_debate->suggestion_id}}" tabindex="-1" data-toggle="tab">
+                                        <strong>{{Date::convertTimeToWeeks(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</strong>
+                                    </a>
+                                </li>
+                @endif
+            @endforeach
+                            </ul>
+                        </li>
         </ul>
         <br>
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="thisWeek">
-                @include('component.debateBox')
-            </div>
-            <div class="tab-pane fade" id="lastWeek">
-                @include('component.debateBox')
-            </div>
-            <div class="tab-pane fade" id="2Weeks">
-                @include('component.debateBox')
-            </div>
-            <div class="tab-pane fade" id="3Weeks">
-                @include('component.debateBox')
-            </div>
+            @foreach(Session::get('most_voted_debates') as $most_voted_debate)
+                <?php
+                    if($most_voted_debate->week == $check_week){
+                        continue;
+                    }else{
+                        $check_week = $most_voted_debate->week;
+                    } 
+                ?>
+                <div class="tab-pane fade {{($active_week_content)? 'in active':''}} <?php $active_week_content=0;?>" id="{{$most_voted_debate->suggestion_id}}">
+                    @include('component.debateBox')
+                </div>
+            @endforeach
         </div>
     </div><!-- /.col-lg-8 -->
     <div class="col-lg-4">
