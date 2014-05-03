@@ -75,8 +75,8 @@ class CreateCreateTablesTable extends Migration {
                         ->onDelete('cascade')
                         ->onUpdate('cascade');
 
-                //unique keys
-                //$attrib->unique('request_id','accept_id');
+                //unique keys In case of an error comment the unique function.
+                $attrib->unique(array('request_id','accept_id'));
             });
                 
                 Schema::create('forum_suggestions',function($attrib){
@@ -122,7 +122,7 @@ class CreateCreateTablesTable extends Migration {
                             ->onUpdate('cascade');
                     
                     //unique keys
-                    $attrib->unique('suggestion_id','voted_by_id');
+                    $attrib->unique(array('suggestion_id','voted_by_id'));
                 });
                 
                 Schema::create('forum_suggestion_comments',function($attrib){
@@ -174,7 +174,7 @@ class CreateCreateTablesTable extends Migration {
                             ->onUpdate('cascade');
                     
                     //unique keys
-                    $attrib->unique('comment_id','liked_by_id');
+                    $attrib->unique(array('comment_id','liked_by_id'));
                 });
                 
                 Schema::create('debate_suggestions',function($attrib){
@@ -226,7 +226,7 @@ class CreateCreateTablesTable extends Migration {
                     $attrib->increments('id');
                     $attrib->integer('suggestion_id')->unsigned();
                     $attrib->integer('commented_by_id')->unsigned();
-                    $attrib->boolean('commentType');
+                    $attrib->boolean('comment_type');
                     $attrib->text('comment_content');
                     $attrib->timestamp('comment_time');
                     $attrib->boolean('status')->default(0);
@@ -272,7 +272,7 @@ class CreateCreateTablesTable extends Migration {
                             ->onUpdate('cascade');
                     
                     //unique keys
-                    $attrib->unique('comment_id','liked_by_id');
+                    $attrib->unique(array('comment_id','liked_by_id'));
                 });
                 
                 Schema::create('pont_of_additions',function($attrib){
@@ -321,7 +321,7 @@ class CreateCreateTablesTable extends Migration {
                             ->onUpdate('cascade');*/
                     
                     //unique keys
-                    $attrib->unique('ad_id','liked_by_id');
+                    $attrib->unique(array('ad_id','liked_by_id'));
                 });
 	}
 

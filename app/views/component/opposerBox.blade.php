@@ -1,38 +1,69 @@
 <li>
-    <div class="timeline-badge danger">
+    <div class="timeline-badge danger" title="Opposing">
         <span class="fa fa-thumbs-down"></span>
     </div>
     <div class="timeline-panel">
         <div class="timeline-heading">
-            <h4 class="timeline-title">UTAWALA</h4>
+            <h4 class="timeline-title">{{User::find($comment->commented_by_id)->nick_name}}</h4>
             <p>
                 <small class="text-muted">
-                    <span class="glyphicon glyphicon-time"></span> 11 hours ago <strong class="pull-right">2 Likes</strong>
+                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime($comment->comment_time)}} 
+                    <strong class="pull-right">
+                        @if(LikedDebateComment::where('comment_id',$comment->id)->count() == 0)
+                            Not Likes Yet
+                        @elseif(LikedDebateComment::where('comment_id',$comment->id)->count() == 1)
+                            1 Like
+                        @else
+                            {{LikedDebateComment::where('comment_id',$comment->id)->count()}} Likes
+                        @endif
+                    </strong>
                 </small>
             </p>
         </div>
         <div class="timeline-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo eu mi scelerisque vulputate. Aliquam in metus eu lectus aliquet egestas.</p>
+            <p>{{$comment->comment_content}}</p>
             <hr>
-            <button type="button" class="btn btn-primary pull-right">
-                <span class="fa fa-thumbs-o-up"></span> Like
-            </button>
+            @if($comment->commented_by_id != Auth::user()->id)
+                <?php 
+                    $check_like=LikedDebateComment::where('comment_id',$comment->id)
+                                                    ->where('liked_by_id',Auth::user()->id)
+                                                    ->first();
+                ?>
+                @if($check_like)
+                    <button type="button" class="btn btn-success disabled pull-right">
+                        <span class="fa fa-thumbs-o-up"></span> You liked this
+                    </button>
+                @else
+                    <a href="{{URL::to('user/likeDebateSuggestionComment/'.$comment->id)}}" type="button" class="btn btn-primary pull-right">
+                        <span class="fa fa-thumbs-o-up"></span> Like
+                    </a>
+                @endif
+            @endif
             <div class="btn-group">
+                @if($comment->commented_by_id != Auth::user()->id)
+                <a href="{{URL::to('user/pointOfAdditionModal/'.$comment->id)}}" type="button" class="btn btn-default btn-sm dropdown-toggle"><span class="fa fa-shield"></span> Point of Addition</a>
+                @else
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-cogs"></span> 
+                    <span class="fa fa-cogs"></span> Manage 
                     <i class="fa fa-chevron-down"></i>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li data-toggle="modal" data-target="#editModal"><a href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                    <li>
+                        <a href="{{URL::to('user/editDebateComment/'.$comment->id)}}">
+                            <span class="glyphicon glyphicon-edit"></span> Edit
+                        </a>
                     </li>
-                    <li><a href="#"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-                    </li>
-                    <li data-toggle="modal" data-target="#POAopposeModal"><a href="#"><span class="fa fa-shield"></span> Point of Addition</a>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="{{URL::to('user/deleteDebateComment/'.$comment->id)}}">
+                            <span class="glyphicon glyphicon-trash"></span> Delete
+                        </a>
                     </li>
                     <!--<li class="divider"></li>
                     <li><a href="#">Separated link</a>
                     </li>-->
                 </ul>
+                @endif
             </div>
         </div>
     </div>

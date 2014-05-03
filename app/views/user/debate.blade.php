@@ -24,15 +24,17 @@
             <?php 
                 $active_week = 1;
                 $active_week_content = 1;
-                $check_week = 0;
+                $check_week_tab = 0;
+                $check_week_content = 0;
                 $drop_down_menu = 0;
+                $most_voted_debates = Session::get('most_voted_debates');
             ?>
-            @foreach(Session::get('most_voted_debates') as $most_voted_debate)
+            @foreach($most_voted_debates as $most_voted_debate)
                 <?php
-                        if($most_voted_debate->week == $check_week){
+                        if($most_voted_debate->week == $check_week_tab){
                             continue;
                         }else{
-                            $check_week = $most_voted_debate->week;
+                            $check_week_tab = $most_voted_debate->week;
                         } 
                     ?>
                 @if($drop_down_menu != 2)
@@ -58,12 +60,12 @@
         </ul>
         <br>
         <div class="tab-content">
-            @foreach(Session::get('most_voted_debates') as $most_voted_debate)
+            @foreach($most_voted_debates as $most_voted_debate)
                 <?php
-                    if($most_voted_debate->week == $check_week){
+                    if($most_voted_debate->week == $check_week_content){
                         continue;
                     }else{
-                        $check_week = $most_voted_debate->week;
+                        $check_week_content = $most_voted_debate->week;
                     } 
                 ?>
                 <div class="tab-pane fade {{($active_week_content)? 'in active':''}} <?php $active_week_content=0;?>" id="{{$most_voted_debate->suggestion_id}}">
@@ -266,5 +268,213 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!--Propose Modal -->
+@if(Session::has('propose_suggestion_modal'))
+<div class="modal fade" id="proposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content custom-panel panel panel-default">
+            <div class="modal-header panel-heading"> 
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Debate</a></h4>
+            </div>
+            <div class="modal-body panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                        <button type="button" class="btn btn-info btn-circle btn-lg pull-left">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">{{User::find(Session::get('propose_suggestion_modal')->suggested_by_id)->nick_name}}</strong> 
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(Session::get('propose_suggestion_modal')->suggestion_time)}}</small>
+                            </div>
+                            <p>
+                                <div>
+                                    {{Session::get('propose_suggestion_modal')->suggestion_content}}
+                                </div>
+                            </p>
+                        </div>
+                    </li>
+                    {{ Form::open(array('url' => "user/proposeDebate/".Session::get('propose_suggestion_modal')->id,'class'=>'form')) }}
+                    <div class="input-group">
+                        <input required="" id="btn-input" name="proposal_content" type="text" class="form-control input-lg" placeholder="Type your proposal here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-success btn-lg" id="btn-chat">
+                                <span class="fa fa-thumbs-up"></span>
+                            </button>
+                        </span>
+                    </div>
+                    {{ Form::close() }}
+                </ul>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@endif
+
+<!--Oppose Modal -->
+@if(Session::has('oppose_suggestion_modal'))
+<div class="modal fade" id="opposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content custom-panel panel panel-default">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Debate</a></h4>
+            </div>
+            <div class="modal-body panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                        <button type="button" class="btn btn-info btn-circle btn-lg pull-left">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">{{User::find(Session::get('oppose_suggestion_modal')->suggested_by_id)->nick_name}}</strong> 
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(Session::get('oppose_suggestion_modal')->suggestion_time)}}</small>
+                            </div>
+                            <p>
+                                <div>
+                                    {{Session::get('oppose_suggestion_modal')->suggestion_content}}
+                                </div>
+                            </p>
+                        </div>
+                    </li>
+                    {{ Form::open(array('url' => "user/opposeDebate/".Session::get('oppose_suggestion_modal')->id,'class'=>'form')) }}
+                    <div class="input-group">
+                        <input id="btn-input" type="text" name="opposal_content" class="form-control input-lg" placeholder="Type your opposal here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger btn-lg" id="btn-chat">
+                                <span class="fa fa-thumbs-down"></span>
+                            </button>
+                        </span>
+                    </div>
+                    {{Form::close()}}
+                </ul>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@endif
+
+<!--Edit Modal -->
+@if(Session::has('debate_comment'))
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content panel panel-default">
+            {{ Form::open(array('url' => 'user/saveEditedDebateComment/'.Session::get('debate_comment')->id)) }}
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><a href="#" style="text-decoration: none;"><span class="glyphicon glyphicon-edit"></span> Edit</a></h4>
+            </div>
+            <div class="modal-body panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                        <button type="button" class="btn btn-info btn-circle btn-lg pull-left">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">{{User::find(DebateSuggestion::find(Session::get('debate_comment')->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find(Session::get('debate_comment')->suggestion_id)->suggestion_time)}}</small>
+                            </div>
+                            <p>
+                                <div>
+                                    {{DebateSuggestion::find(Session::get('debate_comment')->suggestion_id)->suggestion_content}}
+                                </div>
+                            </p>
+                        </div>
+                    </li>
+                    @if(Session::get('debate_comment')->comment_type)
+                    <center><button class="btn btn-lg btn-success disabled btn-block"><strong>Edit Your Proposal</strong></button></center>
+                    <hr>
+                    @else
+                    <center><button class="btn btn-lg btn-danger disabled btn-block"><strong>Edit Your Opposal</strong></button></center>
+                    <hr>
+                    @endif
+                    <textarea required="" name="edited_comment" id="1" class="form-control" rows="5">{{Session::get('debate_comment')->comment_content}}</textarea>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Save</button>
+            </div>
+            {{Form::close()}}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@endif
+
+<!--Point of Addition Modal -->
+@if(Session::has('debate_comment_infor'))
+<div class="modal fade" id="pointOfAdditionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content panel panel-default">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><a href="#" style="text-decoration: none;"><span class="glyphicon glyphicon-edit"></span> Edit</a></h4>
+            </div>
+            <div class="modal-body panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                        <button type="button" class="btn btn-info btn-circle btn-lg pull-left">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">{{User::find(DebateSuggestion::find(Session::get('debate_comment_infor')->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find(Session::get('debate_comment_infor')->suggestion_id)->suggestion_time)}}</small>
+                            </div>
+                            <p>
+                                <div>
+                                    {{DebateSuggestion::find(Session::get('debate_comment_infor')->suggestion_id)->suggestion_content}}
+                                </div>
+                            </p>
+                        </div>
+                    </li>
+                    @if(Session::get('debate_comment_infor')->comment_type)
+                    <center><button class="btn btn-lg btn-success disabled btn-block"><strong>Proposal</strong></button></center>
+                    <hr>
+                    @else
+                    <center><button class="btn btn-lg btn-danger disabled btn-block"><strong>Opposal</strong></button></center>
+                    <hr>
+                    @endif
+                    <li class="right clearfix">
+                        <a href="#" title="View My Full Profile">
+                            <img alt="..." height="50" width="50" class="img-responsive pull-right img-circle" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAErUlEQVR4Xu3YwStscRjG8d8QQnZEFkqyY6NE/n0rlOxkS1ZqrCiFe/udOtPcue6YJ889Gc93Vtz7eo/3eT/9zjl6/X7/V+FDAhMm0APMhElR1iQAGCBICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpgakH8/7+Xs7Ozsrz83M5OTkpi4uLfwRwd3dXbm5uyvr6etnf32/+r9/vl6urq1J/tn729vbKxsbGRMF1fb2JfqkOi6YazOvrazk9PS1vb2+l1+v9BaZd7tPT0wBM+zNLS0vl6OioXF5eNtjq13Nzc2Oj7/p6HTqY+FJTC2Z4eXXaj8BcX1+Xh4eHUmvX1taaE6Y9cba3t8vOzs7g+3rKzM/PNyfP8vJyA6j+/P39fXMCra6uDnC6rjfpqTbxNjsonGowFxcX5eDgYHBKDN+S2tvO1tZWub29/RRMC6ieOI+Pj+X4+Licn5+X9iSq6P7H9TrYsfUSUwumTeGjZ4r232ZmZsru7m5zarQnTHtqjJ4w7feT3naGn5m+cj3rNjto9iPBDN9K2tvMZ7ekFkzNvJ4y9YQaflAeB/Sr1+tgz7ZL/DgwCwsLzVtTfdAd/aysrJTNzc3mremjZ5j6TNHeyuoD8MvLy19vUKMn2levZ9tkR41+HJjR1+oWQHvCjHtLmp2dbbDVt67Dw8PmpKlfD79BffZarVzvs7eyjgxIl4kDM+7vMP96vhm+Nalgxl1P2tQ3KZ56MN8kx5hfAzAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gz6G1HzSbXtC7t7AAAAAElFTkSuQmCC">
+                        </a>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="pull-right primary-font">{{User::find(Session::get('debate_comment_infor')->commented_by_id)->nick_name}}</strong>
+                                <small class="text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(Session::get('debate_comment_infor')->comment_time)}}
+                                </small>
+                            </div>
+                            <p>
+                               <div>
+                                    {{Session::get('debate_comment_infor')->comment_content}}
+                                </div> 
+                            </p>
+                        </div>
+                    </li>
+                    {{ Form::open(array('url' => 'user/addPointOfAddition/'.Session::get('debate_comment_infor')->id)) }}
+                            <div class="input-group">
+                                <input id="btn-input" type="text" name="point_of_addition" class="form-control input-lg" placeholder="Add your point of addition here..." />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-{{(Session::get('debate_comment_infor')->comment_type)? 'success':'danger'}} btn-lg" id="btn-chat">
+                                        <span class="fa fa-hand-o-up"></span> <span class="fa fa-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                    {{Form::close()}}
+                </ul>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@endif
 
 @include('frame.mainFooter')

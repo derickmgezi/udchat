@@ -24,12 +24,13 @@
             </button>
             <ul class="dropdown-menu slidedown">
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#{{$most_voted_debate->suggestion_id}}proposeModal">
+                    <a href="{{URL::to('user/openProposalModal/'.$most_voted_debate->suggestion_id)}}" >
                         <span class="fa fa-thumbs-up"></span> <strong>Propose</strong>
                     </a>
                 </li>
+                <li class="divider"></li>
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#{{$most_voted_debate->suggestion_id}}opposeModal">
+                    <a href="{{URL::to('user/openOpposalModal/'.$most_voted_debate->suggestion_id)}}">
                         <span class="fa fa-thumbs-down"></span> <strong>Oppose</strong>
                     </a>
                 </li>
@@ -38,111 +39,23 @@
     </div><!-- /.panel-heading -->
     <div class="panel-body">
         <ul class="timeline">
-            @include('component.opposerBox')
-            @include('component.assistOpposerBox')
-            @include('component.proposerBox')
-            @include('component.assistProposerBox')
+            <?php 
+                $comments=DebateComment::where('suggestion_id',$most_voted_debate->suggestion_id)
+                          ->get();  
+            ?>
+            @if(count($comments)>0)
+                @foreach($comments as $comment)
+                    @if($comment->comment_type)
+                        @include('component.proposerBox')
+                    @else
+                        @include('component.opposerBox')
+                    @endif
+                @endforeach
+                @include('component.assistOpposerBox')
+                @include('component.assistProposerBox')
+            @else
+                <div class="alert alert-info">No comments yet...</div>
+            @endif
         </ul>
     </div><!-- /.panel-body -->
 </div><!-- /.panel -->
-
-<!--Propose Modal -->
-<div class="modal fade" id="{{$most_voted_debate->suggestion_id}}proposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content custom-panel panel panel-default">
-            <div class="modal-header panel-heading"> 
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Debate</a></h4>
-            </div>
-            <div class="modal-body panel-body">
-                <ul class="chat">
-                    <li class="left clearfix">
-                        <button type="button" class="btn btn-info btn-circle btn-lg pull-left">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </button>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                <strong class="primary-font">{{User::find(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
-                                <small class="pull-right text-muted">
-                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</small>
-                            </div>
-                            <p>
-                                <div>
-                                    {{DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_content}}
-                                </div>
-                            </p>
-                        </div>
-                    </li>
-                    <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-lg" placeholder="Type your proposal here..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-success btn-lg" id="btn-chat">
-                                <span class="fa fa-thumbs-up"></span>
-                            </button>
-                        </span>
-                    </div>
-                </ul>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!--Oppose Modal -->
-<div class="modal fade" id="{{$most_voted_debate->suggestion_id}}opposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content custom-panel panel panel-default">
-            <div class="modal-header panel-heading">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Debate</a></h4>
-            </div>
-            <div class="modal-body panel-body">
-                <ul class="chat">
-                    <li class="left clearfix">
-                        <button type="button" class="btn btn-info btn-circle btn-lg pull-left">
-                            <span class="glyphicon glyphicon-user"></span>
-                        </button>
-                        <div class="chat-body clearfix">
-                            <div class="header">
-                                <strong class="primary-font">{{User::find(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
-                                <small class="pull-right text-muted">
-                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</small>
-                            </div>
-                            <p>
-                                <div>
-                                    {{DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_content}}
-                                </div>
-                            </p>
-                        </div>
-                    </li>
-                    <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-lg" placeholder="Type your opposal here..." />
-                        <span class="input-group-btn">
-                            <button class="btn btn-danger btn-lg" id="btn-chat">
-                                <span class="fa fa-thumbs-down"></span>
-                            </button>
-                        </span>
-                    </div>
-                </ul>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<!--Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content custom-panel panel panel-default">
-            <div class="modal-header panel-heading">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a></h4>
-            </div>
-            <div class="modal-body panel-body">
-                <textarea class="form-control" rows="3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel justo eu mi scelerisque vulputate. Aliquam in metus eu lectus aliquet egestas.
-                </textarea>
-            </div>
-            <div class="panel-footer">
-                <button type="button" class="btn btn-primary btn-lg btn-block">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

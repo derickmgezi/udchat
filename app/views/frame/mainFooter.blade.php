@@ -46,10 +46,43 @@
                 $('#successMessageModal').fadeIn(100,function(){
                     $('#successMessageModal').modal('show');
                 });
-                
-               
-                 
-            </script>
+        </script>
+    @endif
+    
+    @if(Session::has('propose_suggestion_modal'))
+        <script>
+                $('#proposeModal').fadeIn(100,function(){
+                    $('#proposeModal').modal('show');
+                });
+        </script>
+        <?php Session::forget('propose_suggestion_modal'); ?>
+    @endif
+    
+    @if(Session::has('oppose_suggestion_modal'))
+        <script>
+                $('#opposeModal').fadeIn(100,function(){
+                    $('#opposeModal').modal('show');
+                });
+        </script>
+        <?php Session::forget('oppose_suggestion_modal'); ?>
+    @endif
+    
+    @if(Session::has('debate_comment'))
+        <script>
+                $('#editModal').fadeIn(100,function(){
+                    $('#editModal').modal('show');
+                });
+        </script>
+        <?php Session::forget('debate_comment'); ?>
+    @endif
+    
+    @if(Session::has('debate_comment_infor'))
+        <script>
+                $('#pointOfAdditionModal').fadeIn(100,function(){
+                    $('#pointOfAdditionModal').modal('show');
+                });
+        </script>
+        <?php Session::forget('debate_comment_infor'); ?>
     @endif
 
     </body>

@@ -132,7 +132,52 @@ Route::group(array('before'=>'auth'),function(){
         'as'=>'unvoteSuggestedDebate',
         'uses'=>'DebateController@unvoteSuggestedDebate'
     ));
-       
+      
+    Route::get('user/openProposalModal/{id}', array(
+        'as'=>'openProposalModal',
+        'uses'=>'DebateController@openProposalModal'
+    ));
+    
+    Route::get('user/openOpposalModal/{id}', array(
+        'as'=>'openOpposalModal',
+        'uses'=>'DebateController@openOpposalModal'
+    ));
+    
+    Route::post('user/proposeDebate/{id}', array(
+        'as'=>'proposeDebate',
+        'uses'=>'DebateController@proposeDebate'
+    ));
+    
+    Route::post('user/opposeDebate/{id}', array(
+        'as'=>'opposeDebate',
+        'uses'=>'DebateController@opposeDebate'
+    ));
+    
+    Route::get('user/likeDebateSuggestionComment/{id}',array(
+        'as'=>'likeComment',
+        'uses'=>'DebateController@likeComment'
+    ));
+    
+    Route::get('user/editDebateComment/{id}', array(
+        'as'=>'editDebateComment',
+        'uses'=>'DebateController@editDebateComment'
+    ));
+    
+    Route::get('user/deleteDebateComment/{id}', array(
+        'as'=>'deleteDebateComment',
+        'uses'=>'DebateController@deleteDebateComment'
+    ));
+    
+    Route::post('user/saveEditedDebateComment/{id}', array(
+        'as'=>'saveEditedDebateComment',
+        'uses'=>'DebateController@saveEditedDebateComment'
+    ));
+    
+    Route::get('user/pointOfAdditionModal/{id}', array(
+        'as'=>'pointOfAdditionModal',
+        'uses'=>'DebateController@pointOfAdditionModal'
+    ));
+    
     Route::get('user/news',array(
         'as'=>'news',
         'uses'=>'NewsController@news'

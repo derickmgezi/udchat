@@ -109,6 +109,89 @@ class DebateController extends \BaseController {
         return $this->viewDebateSuggestions();
     }
     
+    public function openProposalModal($id){
+        $propose_suggestion_modal = DebateSuggestion::find($id);
+        
+        Session::put('propose_suggestion_modal',$propose_suggestion_modal);
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function openOpposalModal($id){
+        $oppose_suggestion_modal = DebateSuggestion::find($id);
+        
+        Session::put('oppose_suggestion_modal',$oppose_suggestion_modal);
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function proposeDebate($id){
+        $proposal = new DebateComment;
+        $proposal->suggestion_id = $id;
+        $proposal->commented_by_id = Auth::user()->id;
+        $proposal->comment_content = Input::get('proposal_content');
+        $proposal->comment_type = 1;
+        $proposal->comment_time = date("Y-m-d H:i:s");
+        
+        $proposal->save();
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function opposeDebate($id) {
+        $opposal = new DebateComment;
+        $opposal->suggestion_id = $id;
+        $opposal->commented_by_id = Auth::user()->id;
+        $opposal->comment_content = Input::get('opposal_content');
+        $opposal->comment_type = 0;
+        $opposal->comment_time = date("Y-m-d H:i:s");
+        
+        $opposal->save();
+        
+        return Redirect::route('debatePage');
+    }
+
+    public function likeComment($id) {
+        $like_comment = new LikedDebateComment;
+        $like_comment->comment_id = $id;
+        $like_comment->liked_by_id = Auth::user()->id;
+        $like_comment->time_liked = date("Y-m-d H:i:s");
+        
+        $like_comment->save();
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function editDebateComment($id) {
+        $debate_comment = DebateComment::find($id);
+        
+        Session::put('debate_comment',$debate_comment);
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function saveEditedDebateComment($id) {
+        $save_edited_debate_comment = DebateComment::find($id);
+        $save_edited_debate_comment->comment_content = Input::get('edited_comment');
+        $save_edited_debate_comment->save();
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function deleteDebateComment($id) {
+        $delete_debate_comment = DebateComment::find($id);
+        $delete_debate_comment->delete();
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function pointOfAdditionModal($id) {
+        $debate_comment_infor = DebateComment::find($id);
+        
+        Session::put('debate_comment_infor',$debate_comment_infor);
+        
+        return Redirect::route('debatePage');
+    }
     
 	/**
 	 * Display a listing of the resource.
