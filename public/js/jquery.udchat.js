@@ -1,11 +1,22 @@
-function anonymousChat(chtid, chattername){
-                $('#chatter_name').text("");
+ var list_id = 0;
+
+function anonymousChat(chtid){
+                         
 		$.get('anonymousChat/'+chtid, function(data){
 				$('#loader').hide('fast', function(){
-                                        $('#chatter_name').text(chattername);
-					$('#udchat-box').fadeIn(10000).html(data);
+                                        
+					$('#udchat-box').html(data);
 					$('#chat-sms-box').show();
 					$('#btn-chat').attr("chatter", chtid);
+                                        
+                                        var new_list_id = $("#udchat-box li:last").attr('listid');
+                                        console.log(list_id);
+                                        console.log(new_list_id);
+                                        if(list_id != new_list_id ){
+                                            $("#udchat-box li:last").hide().fadeIn(2000 );
+                                            list_id = new_list_id;
+                                        }
+                                        
 				});		
 		});	
 }
@@ -18,16 +29,18 @@ $(document).ready(function(){
         
 
 	$('.cht').on('click', function(){
-
+                
+                $('#chatter_name').text("");
 		$('#udchat-box').html("");
 		$('#chat-sms-box').hide();
 		$('#loader').show('fast')
-		chatter_id     = $(this).attr('chatterid');
+		chatter_id           = $(this).attr('chatterid');
                 var chatter_name     = $(this).attr('chattername');
-                
+                $('#chatter_name').text(chatter_name);
+       
 		//route
-		anonymousChat(chatter_id, chatter_name);
-		setInterval(function(){anonymousChat(chatter_id, chatter_name)}, 5000);
+		anonymousChat(chatter_id);
+		setInterval(function(){anonymousChat(chatter_id)}, 5000);
 	});
 
         if(document.layers){
@@ -39,13 +52,11 @@ $(document).ready(function(){
             if(keyCode == 13) {
                 var btn_input          = $('#btn-input').val();
                 var chatter_id         = $('#btn-input').parent().find("#btn-chat").attr('chatter');
-                 var chatter_name      = $('#btn-input').parent().find("#btn-chat").attr('chattername');
                 var chat_messages      = $('.chat');
 		$('#newXs').fadeIn(1500);
 		$('#content-sms').text(btn_input);
 		$('#btn-input').val('');
 		$.post('anonymousMessage/'+ chatter_id, {message_content:btn_input}, function(data){
-                                 $('#chatter_name').text(chatter_name);
 				$.get('anonymousChat/'+chatter_id, function(data){
 				$('#loader').hide('fast', function(){
 					$('#udchat-box').fadeIn(10000).html(data);
@@ -56,18 +67,25 @@ $(document).ready(function(){
 		});
             }
         }
+        
+        $('#btn-input').on('focus', function(){
+            $('#alrt').hide();
+        });
+        
+        $('#btn-input').on('keyup', function(){
+            $('#alrt').hide();
+        });
+        
 
 	$('#btn-chat').on('click', function(){
 
 		var btn_input          = $('#btn-input').val();
 		var chatter_id         = $(this).attr('chatter');
-                var chattername       = $(this).attr('chattername');
 		var chat_messages      = $('.chat');
 		$('#newXs').fadeIn(1500);
 		$('#content-sms').text(btn_input);
 		$('#btn-input').val('');
 		$.post('anonymousMessage/'+ chatter_id, {message_content:btn_input}, function(data){
-                                $('#chatter_name').text(chattername);
 				$.get('anonymousChat/'+chatter_id, function(data){
 				$('#loader').hide('fast', function(){
 					$('#udchat-box').fadeIn(10000).html(data);

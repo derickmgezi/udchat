@@ -4,7 +4,7 @@
     </div>
     <div class="timeline-panel">
         <div class="timeline-heading">
-            <h4 class="timeline-title">{{User::find($comment->commented_by_id)->nick_name}}</h4>
+            <h4 class="timeline-title">{{User::find($comment->commented_by_id)->nick_name}} <button class="btn btn-success btn-xs">proposed</button></h4>
             <p>
                 <small class="text-muted">
                     <span class="glyphicon glyphicon-time"></span> {{Date::convertTime($comment->comment_time)}} 
@@ -68,3 +68,12 @@
         </div>
     </div>
 </li>
+<?php
+    $propose_points_of_addition= PointOfAddition::where('comment_id',$comment->id)
+                                        ->get();
+?>
+@if($propose_points_of_addition)
+    @foreach($propose_points_of_addition as $point_of_addition)
+        @include('component.assistProposerBox')
+    @endforeach
+@endif

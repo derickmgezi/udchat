@@ -24,8 +24,9 @@
                     </li>
 
                     @if($messageCount>0)
+                        
                         @for($message=0; $message < $messageCount; $message++)
-                            <li class="{{($messageInfor[$message]->sender_id == Auth::user()->id)? 'right':'left'}} clearfix">
+                            <li listid="{{$message}}" class="{{($messageInfor[$message]->sender_id == Auth::user()->id)? 'right':'left'}} clearfix">
                                 <a href="#" title="View My Full Profile">
                                     {{HTML::image('image/download.png','',array('height'=>'50','width'=>'50','class'=>(($messageInfor[$message]->sender_id == Auth::user()->id)? 'pull-right':'pull-left').' img-responsive img-circle'))}}
                                     
@@ -47,7 +48,7 @@
 
                         @endfor
                     @else
-                        <div class="alert alert-info alert-dismissable">
+                        <div id="alrt" class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <strong>No previous messages</strong>
                         </div>

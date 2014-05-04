@@ -38,24 +38,22 @@
         </div>
     </div><!-- /.panel-heading -->
     <div class="panel-body">
-        <ul class="timeline">
             <?php 
                 $comments=DebateComment::where('suggestion_id',$most_voted_debate->suggestion_id)
                           ->get();  
             ?>
             @if(count($comments)>0)
-                @foreach($comments as $comment)
-                    @if($comment->comment_type)
-                        @include('component.proposerBox')
-                    @else
-                        @include('component.opposerBox')
-                    @endif
-                @endforeach
-                @include('component.assistOpposerBox')
-                @include('component.assistProposerBox')
+                <ul class="timeline">
+                    @foreach($comments as $comment)
+                        @if($comment->comment_type)
+                            @include('component.proposerBox')
+                        @else
+                            @include('component.opposerBox')
+                        @endif
+                    @endforeach
+                </ul>
             @else
                 <div class="alert alert-info">No comments yet...</div>
             @endif
-        </ul>
     </div><!-- /.panel-body -->
 </div><!-- /.panel -->

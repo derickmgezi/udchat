@@ -193,6 +193,17 @@ class DebateController extends \BaseController {
         return Redirect::route('debatePage');
     }
     
+    public function addPointOfAddition($id) {
+        $add_point_of_addition = new PointOfAddition;
+        $add_point_of_addition->comment_id = $id;
+        $add_point_of_addition->ad_by_id = Auth::user()->id;
+        $add_point_of_addition->ad_content = Input::get('point_of_addition');
+        $add_point_of_addition->ad_time = date("Y-m-d H:i:s");
+        $add_point_of_addition->save();
+        
+        return Redirect::route('debatePage');
+    }
+    
 	/**
 	 * Display a listing of the resource.
 	 *

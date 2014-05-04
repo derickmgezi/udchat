@@ -4,7 +4,7 @@
     </div>
     <div class="timeline-panel">
         <div class="timeline-heading">
-            <h4 class="timeline-title">{{User::find($comment->commented_by_id)->nick_name}}</h4>
+            <h4 class="timeline-title">{{User::find($comment->commented_by_id)->nick_name}} <button class="btn btn-danger btn-xs">opposed</button></h4>
             <p>
                 <small class="text-muted">
                     <span class="glyphicon glyphicon-time"></span> {{Date::convertTime($comment->comment_time)}} 
@@ -68,3 +68,12 @@
         </div>
     </div>
 </li>
+<?php
+    $opposer_points_of_addition= PointOfAddition::where('comment_id',$comment->id)
+                                        ->get();
+?>
+@if($opposer_points_of_addition)
+    @foreach($opposer_points_of_addition as $point_of_addition)
+        @include('component.assistOpposerBox')
+    @endforeach
+@endif

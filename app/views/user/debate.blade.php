@@ -462,7 +462,7 @@
                     </li>
                     {{ Form::open(array('url' => 'user/addPointOfAddition/'.Session::get('debate_comment_infor')->id)) }}
                             <div class="input-group">
-                                <input id="btn-input" type="text" name="point_of_addition" class="form-control input-lg" placeholder="Add your point of addition here..." />
+                                <input id="btn-input" required="" type="text" name="point_of_addition" class="form-control input-lg" placeholder="Add your point of addition here..." />
                                 <span class="input-group-btn">
                                     <button class="btn btn-{{(Session::get('debate_comment_infor')->comment_type)? 'success':'danger'}} btn-lg" id="btn-chat">
                                         <span class="fa fa-hand-o-up"></span> <span class="fa fa-plus"></span>

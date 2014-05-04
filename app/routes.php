@@ -178,6 +178,11 @@ Route::group(array('before'=>'auth'),function(){
         'uses'=>'DebateController@pointOfAdditionModal'
     ));
     
+    Route::post('user/addPointOfAddition/{id}', array(
+        'as'=>'addPointOfAddition',
+        'uses'=>'DebateController@addPointOfAddition'
+    ));
+    
     Route::get('user/news',array(
         'as'=>'news',
         'uses'=>'NewsController@news'

@@ -275,13 +275,16 @@ class CreateCreateTablesTable extends Migration {
                     $attrib->unique(array('comment_id','liked_by_id'));
                 });
                 
-                Schema::create('pont_of_additions',function($attrib){
+                Schema::create('point_of_additions',function($attrib){
                     $attrib->increments('id');
                     $attrib->integer('comment_id')->unsigned();
                     $attrib->integer('ad_by_id')->unsigned();
                     $attrib->text('ad_content');
                     $attrib->timestamp('ad_time');
                     $attrib->boolean('status');
+                    
+                    // created_at, updated_at DATETIME
+                    $attrib->timestamps();
                     
                     //foreign keys
                     $attrib->foreign('ad_by_id')
@@ -314,11 +317,11 @@ class CreateCreateTablesTable extends Migration {
                             ->onDelete('cascade')
                             ->onUpdate('cascade');
                     
-                    /*$attrib->foreign('ad_id')
+                    $attrib->foreign('ad_id')
                             ->references('id')
                             ->on('point_of_additions')
                             ->onDelete('cascade')
-                            ->onUpdate('cascade');*/
+                            ->onUpdate('cascade');
                     
                     //unique keys
                     $attrib->unique(array('ad_id','liked_by_id'));
