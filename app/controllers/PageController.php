@@ -17,6 +17,10 @@ class PageController extends \BaseController {
     public function debatePage(){
         return View::make('user.debate');
     }
+    
+    public function educationPage(){
+        return View::make('user.forum.education');
+    }
 	/**
 	 * Display a listing of the resource.
 	 *

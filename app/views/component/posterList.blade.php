@@ -1,4 +1,4 @@
-<div class="panel panel-default custom-panel">
+<div class="panel panel-default">
     <div class="panel-heading">
         <div id="carousel1" class="carousel slide" data-ride="carousel" data-interval="15000">
             <!-- Indicators -->

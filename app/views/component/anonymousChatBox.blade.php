@@ -8,7 +8,7 @@
                 </span>
             </div><!-- /input-group -->
             <div class="col-lg-offset-4 col-lg-3">
-                <button type="button" class="btn btn-success btn-block" data-parent="#accordion" data-toggle="collapse" data-target="#female">
+                <button type="button" class="btn btn-default btn-block" data-parent="#accordion" data-toggle="collapse" data-target="#female">
                     {{count(Session::get('anonyUsers'))}} <srong>Users Online</srong> <i class="fa fa-users"></i> 
                 </button>
             </div>
@@ -71,7 +71,7 @@
 ?>
 <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content panel panel-default custom-panel chat-panel {{($messageCount>5)? '':''}}">
+        <div class="modal-content panel panel-default chat-panel {{($messageCount>5)? '':''}}">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">

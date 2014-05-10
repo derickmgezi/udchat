@@ -12,18 +12,22 @@
     </div><!-- /.col-lg-12 --><br>
     <div class="col-lg-12">
         <h2 class="page-header">
-            <span class="my-Calibri-Font">Previous Posters</span>
-            <div class="input-group col-lg-4 col-lg-offset-4 pull-right">
-                <select class="form-control">
-                    <option disabled selected>Arrage By...</option>
-                    <option>Most Likes</option>
-                    <option>Most Comments</option>
-                    <option>Time Created</option>
-                </select>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-refresh"></span></button>
-                </span>
-            </div><!-- /input-group -->
+            <div class="alert alert-warning">
+                <div class="text-info">
+                    <span class="my-Calibri-Font">Previous Posters</span>
+                    <div class="input-group col-lg-4 col-lg-offset-4 pull-right">
+                        <select class="form-control">
+                            <option disabled selected>Arrage By...</option>
+                            <option>Most Likes</option>
+                            <option>Most Comments</option>
+                            <option>Time Created</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-refresh"></span></button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
         </h2>
 
         <div class="row">

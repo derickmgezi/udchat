@@ -331,7 +331,7 @@ class CreateCreateTablesTable extends Migration {
 	public function down()
 	{
             Schema::drop('point_of_addition_likes');
-            Schema::drop('pont_of_additions');
+            Schema::drop('point_of_additions');
             Schema::drop('debate_suggestion_comment_likes');
             Schema::drop('debate_suggestion_comments');
             Schema::drop('debate_suggestion_votes');

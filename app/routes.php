@@ -183,14 +183,99 @@ Route::group(array('before'=>'auth'),function(){
         'uses'=>'DebateController@addPointOfAddition'
     ));
     
+    Route::get('user/likePointOfAddition/{id}', array(
+        'as'=>'likePointOfAddition',
+        'uses'=>'DebateController@likePointOfAddition'
+    ));
+    
+    Route::get('user/editPointOfAdditionModal/{id}', array(
+        'as'=>'editPointOfAdditionModal',
+        'uses'=>'DebateController@editPointOfAdditionModal'
+    ));
+    
+    Route::post('user/saveEditedPointOfAddition/{id}', array(
+        'as'=>'saveEditedPointOfAddition',
+        'uses'=>'DebateController@saveEditedPointOfAddition'
+    ));
+    
+    Route::get('user/deletePointOfAddition/{id}', array(
+        'as'=>'deletePointOfAddition',
+        'uses'=>'DebateController@deletePointOfAddition'
+    ));
+    
+    Route::get('user/educationPage', array(
+        'as'=>'educationPage',
+        'uses'=>'PageController@educationPage'
+    ));
+    
+    Route::get('user/education', array(
+        'as'=>'education',
+        'uses'=>'ForumController@education'
+    ));
+    
+    Route::get('user/viewEducationalSuggestions', array(
+        'as'=>'viewEducationalSuggestions',
+        'uses'=>'ForumController@viewEducationalSuggestions'
+    ));
+    
+    Route::post('user/suggestEducationalForum', array(
+        'as'=>'suggestEducationalForum',
+        'uses'=>'ForumController@suggestEducationalForum'
+    ));
+    
+    Route::get('user/editSuggestedEducationalForum/{id}',array(
+        'as'=>'editSuggestedEducationalForum',
+        'uses'=>'ForumController@editSuggestedEducationalForumModal'
+    ));
+    
+    Route::get('user/deleteSuggestedEducationalForum/{id}',array(
+        'as'=>'deleteSuggestedEducationalForum',
+        'uses'=>'ForumController@deleteSuggestedEducationalForum'
+    ));
+    
+    Route::get('user/voteSuggestedEducationalForum/{id}', array(
+        'as'=>'voteSuggestedEducationalForum',
+        'uses'=>'ForumController@voteSuggestedEducationalForum'
+    ));
+    
+    Route::get('user/unvoteSuggestedEducationalForum/{id}', array(
+        'as'=>'unvoteSuggestedEducationalForum',
+        'uses'=>'ForumController@unvoteSuggestedEducationalForum'
+    ));
+    
+    Route::get('user/openEducationalCommentModal/{id}', array(
+        'as'=>'openEducationalCommentModal',
+        'uses'=>'ForumController@openEducationalCommentModal'
+    ));
+    
+    Route::post('user/addEducationalComment/{id}', array(
+        'as'=>'addEducationalComment',
+        'uses'=>'ForumController@addEducationalComment'
+    ));
+    
+    Route::get('user/editEducationalCommentModal/{id}', array(
+        'as'=>'editEducationalCommentModal',
+        'uses'=>'ForumController@editEducationalCommentModal'
+    ));
+    
+    Route::post('user/editEducationalComment/{id}', array(
+        'as'=>'editEducationalComment',
+        'uses'=>'ForumController@editEducationalComment'
+    ));
+    
+    Route::get('user/deleteEducationalComment/{id}', array(
+        'as'=>'deleteEducationalComment',
+        'uses'=>'ForumController@deleteEducationalComment'
+    ));
+    
+    Route::get('user/likeEducationalComment/{id}', array(
+        'as'=>'likeEducationalComment',
+        'uses'=>'ForumController@likeEducationalComment'
+    ));
+    
     Route::get('user/news',array(
         'as'=>'news',
         'uses'=>'NewsController@news'
-    ));
-
-    Route::get('user/forum/education',array(
-        'as'=>'education',
-        'uses'=>'EducationController@education'
     ));
 
     Route::get('user/forum/politics',array(

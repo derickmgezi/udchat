@@ -38,28 +38,28 @@ class Date {
             return "{$convert} years ago";
         }
     }
+    
+    public static function convertTimeToWeeks($timestamp){
+        $current_year       = date('Y');
+        $year_initiation    = date('Y',strtotime($timestamp));
+        
+        $current_week    = date("W");
+        $initiated_on    = date('W',strtotime($timestamp));
+        
+        if($year_initiation == $current_year){
 
-    public static function convertTimeToWeeks($time) {
-        $time= strtotime($time);
-        $ago = time() - $time;
-
-        if ($ago < (86400 * 7)) {
-            return "This Week";
-        } elseif ($ago < (86400 * 14)) {
-            return "Last Week ";
-        } elseif ($ago < 86400 * 30.4375) {
-            $convert = floor($ago / (86400 * 7));
-            return "{$convert} weeks ago";
-        } elseif ($ago < 86400 * 30.4375 * 2) {
-            return "Last Month";
-        } elseif ($ago < 86400 * 30.4375 * 12) {
-            $convert = floor($ago / (86400 * 30.4375));
-            return "{$convert} month ago";
-        } elseif ($ago < 86400 * 30.4375 * 24) {
-            return "Last Year";
-        } elseif ($ago < 86400 * 30.4375 * 12 * 10) {
-            $convert = floor($ago / (86400 * 30.4375 * 12));
-            return "{$convert} years ago";
+            if($initiated_on == ($current_week-1)){
+                return "This Week";
+            }elseif($initiated_on == ($current_week-2)){
+                return "Last Week";
+            }else{
+                return ($current_week - $initiated_on)." Weeks ago";
+            }
+        }else{
+            $year_difference = ($current_year - $year_initiation);
+            $week_difference = abs($current_week - $initiated_on);
+            
+            return $week_difference + ($year_difference * 52).' Weeks ago';
         }
     }
 

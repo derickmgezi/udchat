@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/wamp/www/udchat/app/views/component/debateBox.blade.php</file>
-            <file>file:/C:/wamp/www/udchat/app/database/migrations/2014_04_18_110521_create_CreateTables_table.php</file>
-            <file>file:/C:/wamp/www/udchat/app/controllers/DebateController.php</file>
-            <file>file:/C:/wamp/www/udchat/app/views/frame/mainFooter.blade.php</file>
-            <file>file:/C:/wamp/www/udchat/app/views/user/debate.blade.php</file>
-            <file>file:/C:/wamp/www/udchat/app/routes.php</file>
-            <file>file:/C:/wamp/www/udchat/app/views/component/proposerBox.blade.php</file>
-            <file>file:/C:/wamp/www/udchat/app/views/component/opposerBox.blade.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
