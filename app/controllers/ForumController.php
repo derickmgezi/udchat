@@ -20,7 +20,7 @@ class ForumController extends \BaseController {
         $most_voted_educational_suggestions =  ForumSuggestionVote::select("suggestion_id",DB::raw("count(voted_by_id) as votes"),DB::raw("week(vote_time,1) as week"))
                                         ->where(
                                                 DB::raw("WEEK(vote_time,1)"),
-                                                '<=',
+                                                '<',
                                                 date('W',strtotime(date("Y-m-d H:i:s")))
                                                 )
                                         ->groupBy('suggestion_id')
@@ -144,29 +144,29 @@ class ForumController extends \BaseController {
     }
     
     public function editEducationalComment($id) {
-        $save_edited_debate_comment = DebateComment::find($id);
-        $save_edited_debate_comment->comment_content = Input::get('edited_comment');
-        $save_edited_debate_comment->save();
+        $save_edited_educational_comment = ForumComment::find($id);
+        $save_edited_educational_comment->comment_content = Input::get('edited_educational_comment');
+        $save_edited_educational_comment->save();
         
-        return Redirect::route('debatePage');
+        return Redirect::route('educationPage');
     }
     
     public function deleteEducationalComment($id) {
-        $delete_debate_comment = DebateComment::find($id);
-        $delete_debate_comment->delete();
+        $delete_educational_comment = ForumComment::find($id);
+        $delete_educational_comment->delete();
         
-        return Redirect::route('debatePage');
+        return Redirect::route('educationPage');
     }
     
     public function likeEducationalComment($id) {
-        $like_comment = new LikedDebateComment;
-        $like_comment->comment_id = $id;
-        $like_comment->liked_by_id = Auth::user()->id;
-        $like_comment->time_liked = date("Y-m-d H:i:s");
+        $like_educational_comment = new LikedForumComment;
+        $like_educational_comment->comment_id = $id;
+        $like_educational_comment->liked_by_id = Auth::user()->id;
+        $like_educational_comment->time_liked = date("Y-m-d H:i:s");
         
-        $like_comment->save();
+        $like_educational_comment->save();
         
-        return Redirect::route('debatePage');
+        return Redirect::route('educationPage');
     }
 	/**
 	 * Display a listing of the resource.

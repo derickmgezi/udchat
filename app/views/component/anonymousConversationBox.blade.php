@@ -14,7 +14,7 @@
                         @foreach(Session::get('anonyChats') as $anonyChats)
                                 <li class="left clearfix col-lg-6">
                                     <a href="#" title="View My Full Profile">
-                                        {{HTML::image('image/download.png','',array('height'=>'100','width'=>'100','class'=>'img-responsive pull-left img-circle'))}}
+                                        {{HTML::image('image/Capture.png','',array('height'=>'100','width'=>'100','class'=>'img-responsive pull-left img-circle'))}}
                                     </a>
                                     <div class="chat-body clearfix">
                                         <div class="header">

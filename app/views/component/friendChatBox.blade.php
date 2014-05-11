@@ -21,7 +21,7 @@
                             @foreach(Session::get('friendList') as $friend)
                                 <li class="left clearfix col-lg-4">
                                     <a href="#" title="View My Full Profile">
-                                        {{HTML::image('image/download.png','',array('height'=>'80','width'=>'80','class'=>'img-responsive pull-left img-circle'))}}
+                                        {{HTML::image('image/Capture.png','',array('height'=>'80','width'=>'80','class'=>'img-responsive pull-left img-circle'))}}
                                     </a>
                                     <div class="chat-body clearfix">
                                         <div class="header">
