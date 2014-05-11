@@ -77,7 +77,7 @@
                 <h4 class="modal-title" id="myModalLabel">
                     <a href="#" style="text-decoration: none;">
                         <sup><i class="fa fa-comments"></i></sup>
-                        <span id="chatter_name"></span>
+                        <span id="chatter_name"></span><span id="typing"></span>
                     </a>
                 </h4>
             </div>

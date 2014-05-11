@@ -63,6 +63,16 @@ Route::group(array('before'=>'auth'),function(){
         'uses'=>'AnonymousUserController@anonymousMessage'
     ));
 
+    Route::post('user/anonymousChatTyping', array(
+        'as'=>'anonymousChatTyping',
+        'uses'=>'AnonymousUserController@anonymousChatTyping'
+    ));
+
+    Route::get('user/anonymousChatTyping/{id}', array(
+        'as'=>'anonymousChatTyping',
+        'uses'=>'AnonymousUserController@anonymousChatCheckTyping'
+    ));
+
     Route::get('user/friendList',array(
         'as'=>'friendList',
         'uses'=>'FriendsController@friendList'

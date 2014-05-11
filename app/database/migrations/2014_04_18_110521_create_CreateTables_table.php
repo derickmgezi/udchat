@@ -32,6 +32,7 @@ class CreateCreateTablesTable extends Migration {
                     $attrib->timestamp('date_sent');
                     $attrib->timestamp('date_read')->nullable();
                     $attrib->boolean('status')->default(0);
+                    $attrib->boolean('checking_typing')->default(0);
                     
                     // created_at, updated_at DATETIME
                     $attrib->timestamps();

@@ -9,7 +9,8 @@ class Message extends Eloquent{
         'message_content',
         'date_sent',
         'date_read',
-        'status'
+        'status',
+        'checking_typing'
         );
         
     public function sender(){
