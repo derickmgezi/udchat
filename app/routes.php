@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 /*Unauthenticated group*/
 Route::group(array('before'=>'guest'),function(){
@@ -533,4 +533,4 @@ Route::group(array('before'=>'auth'),function(){
 /*End of Authenticated group*/
 
 
->>>>>>> 7617b12d3722c69f3b59aae1b1ecd2cfa1202c39
+

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <div class="panel-group" id="accordion">
     <div class="panel panel-default {{(count(Session::get('anonyUsers'))>9)? 'chat-panel':''}}">
         <div class="panel-heading row">
@@ -208,5 +208,5 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
->>>>>>> 7617b12d3722c69f3b59aae1b1ecd2cfa1202c39
+
 </div><!-- /.modal -->
