@@ -1,5 +1,5 @@
 <div class="col-lg-12">
-    <h2 class="page-header my-Calibri-Font">Previous Conversations and Friend Requests</h2>
+    <h2 class="page-header my-Calibri-Font"><div class="alert alert-warning"><div class="text-info">Previous Conversations and Friend Requests</div></div></h2>
     <div class="row">
         <div class="col-lg-6">
             <div class="panel-group" id="accordion">

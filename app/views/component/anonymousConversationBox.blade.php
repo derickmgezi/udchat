@@ -2,7 +2,7 @@
     <div class="{{(count(Session::get('anonyChats'))>6)? 'chat-panel':''}} panel panel-default">
         <div class="panel-heading row">
             <div class="col-lg-3">
-                <button type="button" class="btn btn-primary btn-block" data-parent="#accordion" data-toggle="collapse" data-target="#female">
+                <button type="button" class="btn btn-default btn-block" data-parent="#accordion" data-toggle="collapse" data-target="#female">
                     {{(count(Session::get('anonyChats')))}}<sup><span class="glyphicon glyphicon-comment"></span></sup> <srong>Conversations</srong> 
                 </button>
             </div>

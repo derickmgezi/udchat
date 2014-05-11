@@ -3,24 +3,27 @@
 <div class="row">
     <div class="col-lg-12">
         <h2 class="page-header">
-            <i class="glyphicon glyphicon-fire"></i> Debate
-            @if(Session::get('has_suggested') == 0)
-                <a class="btn btn-success btn-lg" data-toggle="modal" data-target="#suggestModal">
-                    <strong>Suggest</strong>
-                </a>
-            @else
-            <a class="btn btn-success btn-lg disabled" title="Your suggestion was submited">
-                    <strong>Suggest</strong>
-                </a>
-            @endif
-            <a href="{{URL::route('viewDebateSuggestions')}}" class="btn btn-warning btn-lg">
-                <strong><i class="fa fa-eye"></i> View Suggestions</strong>
-            </a>
+            <div class="alert alert-warning">
+                <div class="text-info">
+                    <i class="glyphicon glyphicon-fire"></i> Debate
+                    @if(Session::get('has_suggested') == 0)
+                        <a class="btn btn-success btn-lg" data-toggle="modal" data-target="#suggestModal">
+                            <strong>Suggest</strong>
+                        </a>
+                    @else
+                    <a class="btn btn-success btn-lg disabled" title="Your suggestion was submited">
+                            <strong>Suggest</strong>
+                        </a>
+                    @endif
+                    <a href="{{URL::route('viewDebateSuggestions')}}" class="btn btn-warning btn-lg">
+                        <strong><i class="fa fa-eye"></i> View Suggestions</strong>
+                    </a>
+                </div>
+            </div>
         </h2>
     </div>
     <!-- /.col-lg-12 -->
     <div class="col-lg-8">
-        <ul class="nav nav-tabs">
             <?php 
                 $active_week = 1;
                 $active_week_content = 1;
@@ -29,50 +32,84 @@
                 $drop_down_menu = 0;
                 $most_voted_debates = Session::get('most_voted_debates');
             ?>
-            @foreach($most_voted_debates as $most_voted_debate)
-                <?php
-                        if($most_voted_debate->week == $check_week_tab){
+        @if(count($most_voted_debates) >0){
+            <ul class="nav nav-tabs">
+                @foreach($most_voted_debates as $most_voted_debate)
+                    <?php
+                            if($most_voted_debate->week == $check_week_tab){
+                                continue;
+                            }else{
+                                $check_week_tab = $most_voted_debate->week;
+                            } 
+                        ?>
+                    @if($drop_down_menu != 2)
+                        <li class="{{($active_week)? 'active':''}} <?php $active_week=0;?>">
+                            <a href="#{{$most_voted_debate->suggestion_id}}" data-toggle="tab">
+                                <strong>{{Date::convertTimeToWeeks(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</strong>
+                            </a>
+                        </li><?php $drop_down_menu++; ?>
+                    @else
+                        @if($drop_down_menu == 2)<?php $drop_down_menu++;?>
+                            <li class="dropdown">
+                                <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-chevron-down"></i></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                        @endif
+                                    <li><a href="#{{$most_voted_debate->suggestion_id}}" tabindex="-1" data-toggle="tab">
+                                            <strong>{{Date::convertTimeToWeeks(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</strong>
+                                        </a>
+                                    </li>
+                    @endif
+                @endforeach
+                                </ul>
+                            </li>
+            </ul>
+            <br>
+            <div class="tab-content">
+                @foreach($most_voted_debates as $most_voted_debate)
+                    <?php
+                        if($most_voted_debate->week == $check_week_content){
                             continue;
                         }else{
-                            $check_week_tab = $most_voted_debate->week;
+                            $check_week_content = $most_voted_debate->week;
                         } 
                     ?>
-                @if($drop_down_menu != 2)
-                    <li class="{{($active_week)? 'active':''}} <?php $active_week=0;?>">
-                        <a href="#{{$most_voted_debate->suggestion_id}}" data-toggle="tab">
-                            <strong>{{Date::convertTimeToWeeks(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</strong>
-                        </a>
-                    </li><?php $drop_down_menu++; ?>
-                @else
-                    @if($drop_down_menu == 2)<?php $drop_down_menu++;?>
-                        <li class="dropdown">
-                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-chevron-down"></i></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-                    @endif
-                                <li><a href="#{{$most_voted_debate->suggestion_id}}" tabindex="-1" data-toggle="tab">
-                                        <strong>{{Date::convertTimeToWeeks(DebateSuggestion::find($most_voted_debate->suggestion_id)->suggestion_time)}}</strong>
-                                    </a>
-                                </li>
-                @endif
-            @endforeach
-                            </ul>
-                        </li>
-        </ul>
-        <br>
-        <div class="tab-content">
-            @foreach($most_voted_debates as $most_voted_debate)
-                <?php
-                    if($most_voted_debate->week == $check_week_content){
-                        continue;
-                    }else{
-                        $check_week_content = $most_voted_debate->week;
-                    } 
-                ?>
-                <div class="tab-pane fade {{($active_week_content)? 'in active':''}} <?php $active_week_content=0;?>" id="{{$most_voted_debate->suggestion_id}}">
-                    @include('component.debateBox')
+                    <div class="tab-pane fade {{($active_week_content)? 'in active':''}} <?php $active_week_content=0;?>" id="{{$most_voted_debate->suggestion_id}}">
+                        @include('component.debateBox')
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <button type="button" class="btn btn-success btn-sm">Read</button>
                 </div>
-            @endforeach
-        </div>
+                <div class="panel-body">
+                    <div class="alert alert-warning">
+                        BataShop is a secure online shopping application that enable people to sell and buy
+                        products of on the Internet.<br>
+                    </div>
+                    <div class="alert alert-info">
+                        <small>
+                                Also with BataShop you can buy products of your own choosing, what you need to do is
+                                go into the Buy section and select an Item which will be sent to your 
+                                <strong><b><abbr title="A container on which things are pushed along">shopping cart</abbr></b></strong> and from there you will be able to buy the product(s).
+                        </small>
+                    </div>
+                    <div class="alert alert-info">
+                        <small>
+                            BataShop enable's you to upload an Item that you want to sell using the Sell section
+                            that is found within the app.<br>
+                        </small>
+                    </div>
+                    <div class="alert alert-success">
+                        <small>
+                            BataShop ensurers you that all the information you provide is kept confidential and all
+                            transaction take place under a highly secure and safe environment.<br>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div><!-- /.col-lg-8 -->
     <div class="col-lg-4">
         @include('component.posterList')
@@ -103,7 +140,7 @@
 <!--Success Message modal-->
 <div class="modal fade" id="successMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content panel panel-default custom-panel">
+        <div class="modal-content panel panel-default">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel"><a href="#" style="text-decoration: none;"><span class="fa fa-thumbs-up"></span> Suggestion Success</a></h4>
@@ -136,7 +173,7 @@
 ?>            
 <div class="modal fade" id="suggestionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content custom-panel panel panel-default {{($count_suggestions > 5)? 'chat-panel':''}}">
+        <div class="modal-content panel panel-default {{($count_suggestions > 5)? 'chat-panel':''}}">
             <div class="modal-header panel-heading"> 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-inbox"></span> This Week Suggestions</a></h4>
@@ -273,7 +310,7 @@
 @if(Session::has('propose_suggestion_modal'))
 <div class="modal fade" id="proposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content custom-panel panel panel-default">
+        <div class="modal-content panel panel-default">
             <div class="modal-header panel-heading"> 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Debate</a></h4>
@@ -318,7 +355,7 @@
 @if(Session::has('oppose_suggestion_modal'))
 <div class="modal fade" id="opposeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content custom-panel panel panel-default">
+        <div class="modal-content panel panel-default">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Debate</a></h4>
@@ -359,12 +396,11 @@
 </div><!-- /.modal -->
 @endif
 
-<!--Edit Modal -->
+<!--Edit Debate Comment Modal -->
 @if(Session::has('debate_comment'))
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content panel panel-default">
-            {{ Form::open(array('url' => 'user/saveEditedDebateComment/'.Session::get('debate_comment')->id)) }}
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel"><a href="#" style="text-decoration: none;"><span class="glyphicon glyphicon-edit"></span> Edit</a></h4>
@@ -377,7 +413,9 @@
                         </button>
                         <div class="chat-body clearfix">
                             <div class="header">
-                                <strong class="primary-font">{{User::find(DebateSuggestion::find(Session::get('debate_comment')->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
+                                <strong class="primary-font">
+                                    {{User::find(DebateSuggestion::find(Session::get('debate_comment')->suggestion_id)->suggested_by_id)->nick_name}}
+                                </strong><button type="button" class="btn btn-xs btn-primary">Started the Debate</button>
                                 <small class="pull-right text-muted">
                                     <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find(Session::get('debate_comment')->suggestion_id)->suggestion_time)}}</small>
                             </div>
@@ -389,19 +427,18 @@
                         </div>
                     </li>
                     @if(Session::get('debate_comment')->comment_type)
-                    <center><button class="btn btn-lg btn-success disabled btn-block"><strong>Edit Your Proposal</strong></button></center>
-                    <hr>
+                        <button type="button" class="btn btn-xs btn-success"><strong>Edit Your Proposal</strong></button>
                     @else
-                    <center><button class="btn btn-lg btn-danger disabled btn-block"><strong>Edit Your Opposal</strong></button></center>
-                    <hr>
+                        <button type="button" class="btn btn-xs btn-danger"><strong>Edit Your Opposal</strong></button>
                     @endif
-                    <textarea required="" name="edited_comment" id="1" class="form-control" rows="5">{{Session::get('debate_comment')->comment_content}}</textarea>
+                    {{ Form::open(array('url' => 'user/saveEditedDebateComment/'.Session::get('debate_comment')->id)) }}
+                        <textarea required="" name="edited_comment" id="1" class="form-control" rows="5">{{Session::get('debate_comment')->comment_content}}</textarea>
+                        <hr>
+                        <button type="submit" class="btn btn-primary btn-lg pull-right"><i class="fa fa-save"></i> Save</button>
+                    {{Form::close()}}
                 </ul>
             </div>
-            <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-save"></i> Save</button>
-            </div>
-            {{Form::close()}}
+            
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
@@ -414,7 +451,7 @@
         <div class="modal-content panel panel-default">
             <div class="modal-header panel-heading">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"><a href="#" style="text-decoration: none;"><span class="glyphicon glyphicon-edit"></span> Edit</a></h4>
+                <h4 class="modal-title" id="myModalLabel"><a href="#" style="text-decoration: none;"><span class="fa fa-plus"></span> Add Point of Addition</a></h4>
             </div>
             <div class="modal-body panel-body">
                 <ul class="chat">
@@ -424,7 +461,9 @@
                         </button>
                         <div class="chat-body clearfix">
                             <div class="header">
-                                <strong class="primary-font">{{User::find(DebateSuggestion::find(Session::get('debate_comment_infor')->suggestion_id)->suggested_by_id)->nick_name}}</strong> 
+                                <strong class="primary-font">
+                                    {{User::find(DebateSuggestion::find(Session::get('debate_comment_infor')->suggestion_id)->suggested_by_id)->nick_name}}
+                                </strong><button type="button" class="btn btn-primary btn-xs">Started the Debate</button>
                                 <small class="pull-right text-muted">
                                     <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find(Session::get('debate_comment_infor')->suggestion_id)->suggestion_time)}}</small>
                             </div>
@@ -435,20 +474,20 @@
                             </p>
                         </div>
                     </li>
-                    @if(Session::get('debate_comment_infor')->comment_type)
-                    <center><button class="btn btn-lg btn-success disabled btn-block"><strong>Proposal</strong></button></center>
-                    <hr>
-                    @else
-                    <center><button class="btn btn-lg btn-danger disabled btn-block"><strong>Opposal</strong></button></center>
-                    <hr>
-                    @endif
                     <li class="right clearfix">
                         <a href="#" title="View My Full Profile">
                             <img alt="..." height="50" width="50" class="img-responsive pull-right img-circle" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAErUlEQVR4Xu3YwStscRjG8d8QQnZEFkqyY6NE/n0rlOxkS1ZqrCiFe/udOtPcue6YJ889Gc93Vtz7eo/3eT/9zjl6/X7/V+FDAhMm0APMhElR1iQAGCBICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpgakH8/7+Xs7Ozsrz83M5OTkpi4uLfwRwd3dXbm5uyvr6etnf32/+r9/vl6urq1J/tn729vbKxsbGRMF1fb2JfqkOi6YazOvrazk9PS1vb2+l1+v9BaZd7tPT0wBM+zNLS0vl6OioXF5eNtjq13Nzc2Oj7/p6HTqY+FJTC2Z4eXXaj8BcX1+Xh4eHUmvX1taaE6Y9cba3t8vOzs7g+3rKzM/PNyfP8vJyA6j+/P39fXMCra6uDnC6rjfpqTbxNjsonGowFxcX5eDgYHBKDN+S2tvO1tZWub29/RRMC6ieOI+Pj+X4+Licn5+X9iSq6P7H9TrYsfUSUwumTeGjZ4r232ZmZsru7m5zarQnTHtqjJ4w7feT3naGn5m+cj3rNjto9iPBDN9K2tvMZ7ekFkzNvJ4y9YQaflAeB/Sr1+tgz7ZL/DgwCwsLzVtTfdAd/aysrJTNzc3mremjZ5j6TNHeyuoD8MvLy19vUKMn2levZ9tkR41+HJjR1+oWQHvCjHtLmp2dbbDVt67Dw8PmpKlfD79BffZarVzvs7eyjgxIl4kDM+7vMP96vhm+Nalgxl1P2tQ3KZ56MN8kx5hfAzAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gz6G1HzSbXtC7t7AAAAAElFTkSuQmCC">
                         </a>
                         <div class="chat-body clearfix">
                             <div class="header">
-                                <strong class="pull-right primary-font">{{User::find(Session::get('debate_comment_infor')->commented_by_id)->nick_name}}</strong>
+                                <strong class="pull-right primary-font">
+                                    {{User::find(Session::get('debate_comment_infor')->commented_by_id)->nick_name}}
+                                    @if(Session::get('debate_comment_infor')->comment_type)
+                                        <button type="button" class="btn btn-xs btn-success"><strong>Proposal</strong></button>
+                                    @else
+                                        <button type="button" class="btn btn-xs btn-danger"><strong>Opposal</strong></button>
+                                    @endif
+                                </strong>
                                 <small class="text-muted">
                                     <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(Session::get('debate_comment_infor')->comment_time)}}
                                 </small>
@@ -469,6 +508,75 @@
                                     </button>
                                 </span>
                             </div>
+                    {{Form::close()}}
+                </ul>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@endif
+
+<!--Edit Point of Addition Modal -->
+@if(Session::has('point_of_addition_infor'))
+<div class="modal fade" id="editPointOfAdditionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content panel panel-default">
+            <div class="modal-header panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"><a href="#" style="text-decoration: none;"><span class="glyphicon glyphicon-edit"></span> Edit</a></h4>
+            </div>
+            <div class="modal-body panel-body">
+                <ul class="chat">
+                    <li class="left clearfix">
+                        <button type="button" class="btn btn-info btn-circle btn-lg pull-left">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </button>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">
+                                    {{User::find(DebateSuggestion::find(DebateComment::find(Session::get('point_of_addition_infor')->comment_id)->suggestion_id)->suggested_by_id)->nick_name}}
+                                </strong> <button type="button" class="btn btn-xs btn-primary">Started the Debate</button>
+                                <small class="pull-right text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateSuggestion::find(DebateComment::find(Session::get('point_of_addition_infor')->comment_id)->suggestion_id)->suggestion_time)}}</small>
+                            </div>
+                            <p>
+                                <div>
+                                    {{DebateSuggestion::find(DebateComment::find(Session::get('point_of_addition_infor')->comment_id)->suggestion_id)->suggestion_content}}
+                                </div>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="right clearfix">
+                        <a href="#" title="View My Full Profile">
+                            <img alt="..." height="50" width="50" class="img-responsive pull-right img-circle" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACMCAYAAACuwEE+AAAErUlEQVR4Xu3YwStscRjG8d8QQnZEFkqyY6NE/n0rlOxkS1ZqrCiFe/udOtPcue6YJ889Gc93Vtz7eo/3eT/9zjl6/X7/V+FDAhMm0APMhElR1iQAGCBICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpAcBIcVEMGAxICQBGiotiwGBASgAwUlwUAwYDUgKAkeKiGDAYkBIAjBQXxYDBgJQAYKS4KAYMBqQEACPFRTFgMCAlABgpLooBgwEpgakH8/7+Xs7Ozsrz83M5OTkpi4uLfwRwd3dXbm5uyvr6etnf32/+r9/vl6urq1J/tn729vbKxsbGRMF1fb2JfqkOi6YazOvrazk9PS1vb2+l1+v9BaZd7tPT0wBM+zNLS0vl6OioXF5eNtjq13Nzc2Oj7/p6HTqY+FJTC2Z4eXXaj8BcX1+Xh4eHUmvX1taaE6Y9cba3t8vOzs7g+3rKzM/PNyfP8vJyA6j+/P39fXMCra6uDnC6rjfpqTbxNjsonGowFxcX5eDgYHBKDN+S2tvO1tZWub29/RRMC6ieOI+Pj+X4+Licn5+X9iSq6P7H9TrYsfUSUwumTeGjZ4r232ZmZsru7m5zarQnTHtqjJ4w7feT3naGn5m+cj3rNjto9iPBDN9K2tvMZ7ekFkzNvJ4y9YQaflAeB/Sr1+tgz7ZL/DgwCwsLzVtTfdAd/aysrJTNzc3mremjZ5j6TNHeyuoD8MvLy19vUKMn2levZ9tkR41+HJjR1+oWQHvCjHtLmp2dbbDVt67Dw8PmpKlfD79BffZarVzvs7eyjgxIl4kDM+7vMP96vhm+Nalgxl1P2tQ3KZ56MN8kx5hfAzAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gwKGE+OMV0AE7Nqz6CA8eQY0wUwMav2DAoYT44xXQATs2rPoIDx5BjTBTAxq/YMChhPjjFdABOzas+ggPHkGNMFMDGr9gz6G1HzSbXtC7t7AAAAAElFTkSuQmCC">
+                        </a>
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="pull-right primary-font">
+                                    {{User::find(DebateComment::find(Session::get('point_of_addition_infor')->comment_id)->commented_by_id)->nick_name}}
+                                
+                                @if(DebateComment::find(Session::get('point_of_addition_infor')->comment_id)->comment_type)
+                                    <button type="button" class="btn btn-xs btn-success">Proposed</button>
+                                @else
+                                    <button type="button" class="btn btn-xs btn-danger">Opposed</button>
+                                @endif
+                                </strong>
+                                <small class="text-muted">
+                                    <span class="glyphicon glyphicon-time"></span> {{Date::convertTime(DebateComment::find(Session::get('point_of_addition_infor')->comment_id)->comment_time)}}
+                                </small>
+                            </div>
+                            <p>
+                               <div>
+                                    {{DebateComment::find(Session::get('point_of_addition_infor')->comment_id)->comment_content}}
+                                </div> 
+                            </p>
+                        </div>
+                    </li>
+                    <button type="button" class="btn btn-xs btn-info"><strong>Edit Your Point of addition</strong></button>
+                    {{ Form::open(array('url' => 'user/saveEditedPointOfAddition/'.Session::get('point_of_addition_infor')->id))}}
+                        <textarea required="" name="edited_point_of_addition" id="1" class="form-control" rows="5">{{Session::get('point_of_addition_infor')->ad_content}}</textarea>
+                        <hr>
+                        <button type="submit" class="btn btn-primary btn-lg pull-right"><i class="fa fa-save"></i> Save</button>
                     {{Form::close()}}
                 </ul>
             </div>

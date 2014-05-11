@@ -44,8 +44,7 @@
                 <a href="{{URL::to('user/pointOfAdditionModal/'.$comment->id)}}" type="button" class="btn btn-default btn-sm dropdown-toggle"><span class="fa fa-shield"></span> Point of Addition</a>
                 @else
                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-cogs"></span> Manage 
-                    <i class="fa fa-chevron-down"></i>
+                    <span class="fa fa-cogs"></span> Manage <i class="fa fa-chevron-down"></i>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     <li>

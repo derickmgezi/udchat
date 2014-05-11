@@ -19,7 +19,7 @@ class DebateController extends \BaseController {
         $most_voted_debates=  DebateSuggestionVote::select("suggestion_id",DB::raw("count(voted_by_id) as votes"),DB::raw("week(vote_time,1) as week"))
                                         ->where(
                                                 DB::raw("WEEK(vote_time,1)"),
-                                                '<=',
+                                                '<',
                                                 date('W',strtotime(date("Y-m-d H:i:s")))
                                                 )
                                         ->groupBy('suggestion_id')
@@ -29,9 +29,6 @@ class DebateController extends \BaseController {
                                         ->get();
         
         Session::put('most_voted_debates',$most_voted_debates);
-        foreach($most_voted_debates as $most_voted_debate){
-            echo 'Suggestion id:'.$most_voted_debate->suggestion_id.' votes:'.$most_voted_debate->votes.' week:'.$most_voted_debate->week.'<br><br>';
-        }
     
         return Redirect::route('debatePage');
     }
@@ -200,6 +197,39 @@ class DebateController extends \BaseController {
         $add_point_of_addition->ad_content = Input::get('point_of_addition');
         $add_point_of_addition->ad_time = date("Y-m-d H:i:s");
         $add_point_of_addition->save();
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function likePointOfAddition($id) {
+        $like_point_of_addition = new LikedPointOfAddition;
+        $like_point_of_addition->ad_id =$id;
+        $like_point_of_addition->liked_by_id = Auth::user()->id;
+        $like_point_of_addition->time_liked = date("Y-m-d H:i:s");
+        $like_point_of_addition->save();
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function editPointOfAdditionModal($id) {
+        $point_of_addition_infor = PointOfAddition::find($id);
+        
+        Session::put('point_of_addition_infor',$point_of_addition_infor);
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function saveEditedPointOfAddition($id) {
+        $edited_point_of_addition = PointOfAddition::find($id);
+        $edited_point_of_addition->ad_content = Input::get('edited_point_of_addition');
+        $edited_point_of_addition->save();
+        
+        return Redirect::route('debatePage');
+    }
+    
+    public function deletePointOfAddition($id) {
+        $point_of_addition = PointOfAddition::find($id);
+        $point_of_addition->delete();
         
         return Redirect::route('debatePage');
     }
