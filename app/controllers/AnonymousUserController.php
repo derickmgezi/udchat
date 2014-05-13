@@ -2,6 +2,35 @@
 
 class AnonymousUserController extends \BaseController {
 
+
+    public function anonymousChatTyping(){
+        $receiver_id  = Input::get('cid');
+        $sender_id   = Auth::user()->id;
+
+        $message     = Message::whereRaw('sender_id = ? and receiver_id = ? ', array($sender_id, $receiver_id))->count();
+        if($message != 0){
+            $message = Message::whereRaw('sender_id = ? and receiver_id = ? ', array($sender_id, $receiver_id))->first();
+            $message->checking_typing = 1;
+            $message->save();
+        }
+    }
+
+    public function anonymousChatCheckTyping($id){
+        $receiver_id  = $id;
+        $sender_id   = Auth::user()->id;
+        $message     = Message::whereRaw('sender_id = ? and receiver_id = ? ', array($sender_id, $receiver_id))->count();
+        if($message != 0){
+            $typing = Message::whereRaw('sender_id = ? and receiver_id = ? ', array($sender_id, $receiver_id))->first()->checking_typing;
+            if($typing == 1){
+                return " is typing ...";
+            }else{
+                return "";
+            }
+        }else{
+            return " is typing ...";
+        }
+    }
+
     public function anonymousUsers(){
         $friend_list=Friend::where('request_id',Auth::user()->id)->where('status',1)
                     ->orWhere('accept_id',Auth::user()->id)->where('status',1)
@@ -63,6 +92,12 @@ class AnonymousUserController extends \BaseController {
     }
     
     public function anonymousMessage($id){
+
+        $message = Message::whereRaw('sender_id = ? and receiver_id = ?', array(Auth::user()->id,$id))->first();
+        $message->checking_typing = 0;
+        $message->save();
+
+
         $saveMessage = new Message(array(
             'sender_id' => Auth::user()->id,
             'receiver_id' => $id,
@@ -78,7 +113,8 @@ class AnonymousUserController extends \BaseController {
 //            ));
         
         $saveMessage -> save();
-        
+
+
         if($saveMessage){
             $messageInfor =  Message::where('sender_id',$id)
                             ->where('receiver_id',Auth::user()->id)

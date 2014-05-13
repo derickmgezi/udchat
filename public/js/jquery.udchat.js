@@ -1,4 +1,26 @@
+
  var list_id = 0;
+
+function anonymousChatFT(chtid){
+                         
+		$.get('anonymousChat/'+chtid, function(data){
+				$('#loader').hide('fast', function(){
+                                        
+					$('#udchat-box').html(data);
+					$('#chat-sms-box').show();
+					$('#btn-chat').attr("chatter", chtid);
+					list_id = $("#udchat-box > ul > li:last").attr('listid');
+                                        
+				});		
+		});	
+}
+
+function anonymousChatCheckTyping(chtid){
+	$.get('anonymousChatTyping/'+chtid, function(data){
+			$('#typing').html(data);		                                    
+		});		
+}
+
 
 function anonymousChat(chtid){
                          
@@ -9,11 +31,21 @@ function anonymousChat(chtid){
 					$('#chat-sms-box').show();
 					$('#btn-chat').attr("chatter", chtid);
                                         
+
                                         var new_list_id = $("#udchat-box li:last").attr('listid');
                                         console.log(list_id);
                                         console.log(new_list_id);
                                         if(list_id != new_list_id ){
                                             $("#udchat-box li:last").hide().fadeIn(2000 );
+
+                                        var new_list_id = $("#udchat-box > ul > li:last").attr('listid');
+                                        
+                                        console.log(list_id);
+                                        console.log(new_list_id);
+
+                                        if(list_id != new_list_id ){
+                                            $('#0').hide().fadeIn(2000);
+
                                             list_id = new_list_id;
                                         }
                                         
@@ -23,14 +55,18 @@ function anonymousChat(chtid){
 
 
 
-$(document).ready(function(){
+        $(document).ready(function(){
 	//chat codes
 	var chatter_id;
         
 
 	$('.cht').on('click', function(){
                 
+
                 $('#chatter_name').text("");
+
+        $('#chatter_name').text("");
+
 		$('#udchat-box').html("");
 		$('#chat-sms-box').hide();
 		$('#loader').show('fast')
@@ -39,8 +75,13 @@ $(document).ready(function(){
                 $('#chatter_name').text(chatter_name);
        
 		//route
+
 		anonymousChat(chatter_id);
 		setInterval(function(){anonymousChat(chatter_id)}, 5000);
+		anonymousChatFT(chatter_id);
+		setInterval(function(){anonymousChat(chatter_id)}, 5000);
+		
+
 	});
 
         if(document.layers){
@@ -75,6 +116,25 @@ $(document).ready(function(){
         $('#btn-input').on('keyup', function(){
             $('#alrt').hide();
         });
+
+           // $('#alrt').hide();
+        });
+        
+        // $('#btn-input').on('keyup', function(){
+
+        // 	var characters = $(this).val().length;
+
+   
+        // 	if(characters == 4){
+
+	       //     	var chatter_id = $('#chat-sms-box').find('#btn-chat').attr('chatter');
+	       //     	$.post('anonymousChatTyping', {cid:chatter_id}, function(data){
+	       //     		setInterval(function(){anonymousChatCheckTyping(chatter_id)}, 800);
+	       //     	});
+        // 	}
+        	
+        // });
+
         
 
 	$('#btn-chat').on('click', function(){

@@ -26,7 +26,11 @@
                     @if($messageCount>0)
                         
                         @for($message=0; $message < $messageCount; $message++)
+
                             <li listid="{{$message}}" class="{{($messageInfor[$message]->sender_id == Auth::user()->id)? 'right':'left'}} clearfix">
+
+                            <li listid="{{$message}}" id="{{$message}}" class="{{($messageInfor[$message]->sender_id == Auth::user()->id)? 'right':'left'}} clearfix">
+
                                 <a href="#" title="View My Full Profile">
                                     {{HTML::image('image/download.png','',array('height'=>'50','width'=>'50','class'=>(($messageInfor[$message]->sender_id == Auth::user()->id)? 'pull-right':'pull-left').' img-responsive img-circle'))}}
                                     
