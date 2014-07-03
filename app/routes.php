@@ -227,9 +227,6 @@ Route::group(array('before'=>'auth'),function(){
 });
 /*End of Authenticated group*/
 
-
-=======
-<?php
 /*Unauthenticated group*/
 Route::group(array('before'=>'guest'),function(){
     //CSRF-Cross Site Request Forgery protection
